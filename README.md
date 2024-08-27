@@ -37,6 +37,15 @@ BREGLER Thomas (@thomixlz)
 
 ## Version History
 
-* 0.1
+* 0.2 : Roles, Login, Register System
+    * Add security & validator bundle for login/register requirements 
+    * Config security.yaml for create ADMIN ROLE
+    * Create manually the first Admin User
+    * Create manually the first User for test
+    * Add Login Page
+    * Add Register Page 
+    * Protect route about /register it's only for admin now
+
+* 0.1 : Init 
     * Initial Release
     * Add Read.me

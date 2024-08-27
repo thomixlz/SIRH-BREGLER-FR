@@ -5,6 +5,15 @@
 {% block body %}
 
 <div class="example-wrapper">
+
+    {% if is_granted('ROLE_ADMIN') %}
+    <p>Mode Admin</p>
+{% elseif is_granted('ROLE_USER') %}
+    <p>Mode User Connecté</p>
+{% else %}
+    <p>Mode Non Connecté</p>
+{% endif %}
+
     <h1>Hello {{ controller_name }}! ✅</h1>
 
     This friendly message is coming from:
