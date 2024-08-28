@@ -44,14 +44,11 @@
 <div class="container">
   <main class="signup-container">
     <h1 class="heading-primary">Log in<span class="span-blue">.</span></h1>
-    {% if app.user %}
-    <p class="text-mute" style="font-weight:700;">You are already logged in as {{ app.user.userIdentifier }} ! You can logout :)</p>
-          {% else %}
-              <p class="text-mute">Welcome to the PIRADMIN ! Log in to manage your site :)</p>
-
-                 {% endif %}
-
-
+      {% if app.user %}
+        <p class="text-mute" style="font-weight:700;">Tu es connecté avec l'adresse mail : {{ app.user.userIdentifier }} ! Tu peux te déconnecter :)</p>
+      {% else %}
+        <p class="text-mute">Bienvenue sur la dashboard SIRH ! Connecte toi pour gérer :)</p>
+      {% endif %}
     <div class="login-wrapper">
       
       <div class="line-breaker">
@@ -93,7 +90,7 @@
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
     </form>
-    <p class="text-mute" style="font-size: 10px;">Piranha et petits poissons rouges © 2024</p>
+    <p class="text-mute" style="font-size: 10px;">BREGLER Thomas - SIRH © 2024</p>
   </main>
   <div class="welcome-container" >
    
@@ -102,7 +99,6 @@
 </div>
 
 <style>
-
 html {
   font-size: 62.5%;
 }
@@ -132,7 +128,7 @@ a {
     font-weight: 700;
 }
 .span-blue {
-  color: #FA0016;
+  color: #fa6a00;
 }
 .signup-container,
 .signup-form {
@@ -168,13 +164,13 @@ a {
   width: 100%;
 }
 .input-text {
-  outline-color: #FA0016;
+  outline-color: #fa6a00;
 }
 
 .btn {
   padding: 2rem 3rem;
   border: none;
-  background: #FA0016;
+  background: #fa6a00;
   color: #fff!important;
   border-radius: 1rem;
   cursor: pointer;
@@ -192,7 +188,7 @@ a {
   box-shadow: none;
 }
 .btn-login:hover {
-  background: #852830;
+  background: #fa6d20;
 }
 .inp {
   position: relative;
@@ -216,7 +212,7 @@ a {
   transform: scale(0.75);
 }
 .input-text + .label {
-  color: #FA0016;
+  color: #fa6a00;
 }
 
 
@@ -271,9 +267,9 @@ a {
 }
 
 .welcome-container {
-  background-image:url('../public/assets/img/cms/HomePage_Piranha_1920x1080.jpg');
+  background-image:url('../assets/img/cms/mns-bg.jpg');
   background-size: cover;
-    background-position: center;
+  background-position: right;
   grid-column: 2 / 3;
   grid-row: 1;
   display: flex;

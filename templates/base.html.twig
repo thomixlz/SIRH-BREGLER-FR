@@ -16,6 +16,9 @@
         
         <!-- 🔖 LINK 🔖 -->
 
+        {# Iconnoir #}
+        <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css"/>
+
         {# Google Fonts #}
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,6 +32,7 @@
 
         <!-- 🔖 CSS 🔖 -->
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/sidebar.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/slick-theme.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/js/slick-1.8.1/slick/slick.css') }}"/>
         <link rel="stylesheet" href="{{ asset('assets/css/scroll-bar.css') }}">
@@ -42,7 +46,89 @@
                                 🔧 NAVBAR 🔧                     
 **************************************************************************************** --> 
 
-    {% block body %}{% endblock %}
+ <main class="container">
+      <div class="menu">
+        <div class="avatar">
+          <img class="thumb" src="{{ asset('assets/img/navbar/userpicture.png') }}" width="60"/>
+          <span class="name">
+                <b>{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %} {{ app.user.getEmail() }} {% endif %}</b>
+            <br>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <p class="text-center">Mode Admin</p>
+                {% elseif is_granted('ROLE_CONNECT') %}
+                    <p class="text-center">Mode User Connecté</p>
+                {% else %}
+                    <p class="text-center">Mode Non Connecté</p>
+                {% endif %}
+          </span>
+        </div>
+        <nav class="primary">
+            <a href="#" class="menu-item active">
+                <span class="iconoir-report-columns"></span>
+                <span class="desc">Dashboard</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="iconoir-google-docs"></span>
+                <span class="desc">Absences</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="iconoir-skateboarding"></span>
+                <span class="desc">Déplacements</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="iconoir-table"></span>
+                <span class="desc">Équipes</span>
+            </a>
+            <a href="#" class="menu-item">
+                <span class="iconoir-user"></span>
+                <span class="desc">Employés</span>
+            </a>
+            
+            <a href="#" class="menu-item">
+                <span class="iconoir-settings"></span>
+                <span class="desc">Paramètres</span>
+            </a>
+            <a href="{{ path('app_logout') }}" class="menu-item">
+                <span class="iconoir-log-out"></span>
+                <span class="desc">Logout</span>
+            </a>
+        </nav>
+        <span class="expander iconoir-arrow-right"></span>
+      </div>
+      <div class="topbar">
+        <h1 class="current">SIRH - MNS</h1>
+        <nav>
+          <a href="#" class="menu-item">Orders</a>
+          <a href="#" class="menu-item">Clients</a>
+          <a href="#" class="menu-item">Sections</a>
+          <a href="#" class="menu-item">Products</a>
+        </nav>
+      </div>
+      <div class="wrapper">
+
+            {% block body %}{% endblock %}
+        </div>
+    
+        
+    </main>
+    <div class="video">
+      <video
+        src="https://user-images.githubusercontent.com/30212452/203724691-9e93bf50-df02-4034-9743-dfe32d18bf58.mp4"
+        muted
+        playsinline
+        autoplay
+        loop
+      ></video>
+    </div>
+
+
+
+       
+
+    
+
+
+
 
 <!-- ***********************************************************************************
                                 🔧 FOOTER 🔧                     
@@ -55,7 +141,7 @@
 **************************************************************************************** --> 
 
         <!-- Scripts -->
-        {# <script src="{{ asset('assets/js/script.js') }}"></script> #}
+        <script src="{{ asset('assets/js/sidebar.js') }}"></script>
 
 
         <!-- ***************************************************************** --> 

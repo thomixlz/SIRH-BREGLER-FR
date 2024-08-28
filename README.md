@@ -37,7 +37,15 @@ BREGLER Thomas (@thomixlz)
 
 ## Version History
 
-* 0.2 : Roles, Login, Register System
+* 0.3 :
+    * Add Base design
+    * Add Navbar
+    * Add Dashboard design
+    * Change Login page design 
+    * Add redirect to /login for unlog users 
+
+
+* 0.2 :
     * Add security & validator bundle for login/register requirements 
     * Config security.yaml for create ADMIN ROLE
     * Create manually the first Admin User
@@ -46,6 +54,6 @@ BREGLER Thomas (@thomixlz)
     * Add Register Page 
     * Protect route about /register it's only for admin now
 
-* 0.1 : Init 
+* 0.1 
     * Initial Release
     * Add Read.me
