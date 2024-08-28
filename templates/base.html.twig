@@ -57,6 +57,14 @@
                     <p class="text-center">Mode Admin</p>
                 {% elseif is_granted('ROLE_CONNECT') %}
                     <p class="text-center">Mode User Connecté</p>
+                {% elseif is_granted('ROLE_DIRECTEURRH') %}
+                    <p class="text-center">Mode User Connecté</p>
+                {% elseif is_granted('ROLE_RESPONSABLE_HIERA') %}
+                    <p class="text-center">Mode User Connecté</p>
+                {% elseif is_granted('ROLE_REFERENT_FRAIS') %}
+                    <p class="text-center">Mode User Connecté</p>
+                {% elseif is_granted('ROLE_RTT') %}
+                    <p class="text-center">Mode RTT Connecté</p>
                 {% else %}
                     <p class="text-center">Mode Non Connecté</p>
                 {% endif %}

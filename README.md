@@ -37,13 +37,16 @@ BREGLER Thomas (@thomixlz)
 
 ## Version History
 
+* 0.4 :
+    * Add All roles
+    * Add All routes about the roles for the security
+
 * 0.3 :
     * Add Base design
     * Add Navbar
     * Add Dashboard design
     * Change Login page design 
     * Add redirect to /login for unlog users 
-
 
 * 0.2 :
     * Add security & validator bundle for login/register requirements 

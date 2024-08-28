@@ -9,13 +9,22 @@
 <div class="d-flex">
 
 <div class="">
-{% if is_granted('ROLE_ADMIN') %}
-    <p>Bonjour {{ app.user.getEmail() }}, Mode Admin</p>
-{% elseif is_granted('ROLE_CONNECT') %}
-    <p>Bonjour {{ app.user.getEmail() }}, Mode User Connecté</p>
-{% else %}
-    <p>Bonjour Invité, Mode Non Connecté</p>
-{% endif %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <p class="text-center">Mode Admin</p>
+    {% elseif is_granted('ROLE_DIRECTEURRH') %}
+        <p class="text-center">Mode Directeur RH Connecté</p>
+    {% elseif is_granted('ROLE_RESPONSABLE_HIERA') %}
+        <p class="text-center">Mode Responsable Hierarchique Connecté</p>
+    {% elseif is_granted('ROLE_REFERENT_FRAIS') %}
+        <p class="text-center">Mode Référent frais Connecté</p>
+    {% elseif is_granted('ROLE_RTT') %}
+        <p class="text-center">Mode RTT Connecté</p>
+    {% elseif is_granted('ROLE_CONNECT') %}
+        <p class="text-center">Mode User Connecté</p>
+    {% else %}
+        <p>No log</p>
+    {% endif %}
+
 
 
 
