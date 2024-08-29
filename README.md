@@ -38,8 +38,8 @@ BREGLER Thomas (@thomixlz)
 ## Version History
 
 * 0.4 :
-    * Add All roles
-    * Add All routes about the roles for the security
+    * Add All Roles
+    * Add All Routes about the roles for the security
 
 * 0.3 :
     * Add Base design

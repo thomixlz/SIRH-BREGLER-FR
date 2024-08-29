@@ -4,37 +4,15 @@
 
 {% block body %}
 
+<div class="topbar">
+        <h1 class="current"><b>SIRH - MNS</b> | <span>DASHBOARD</span> </h1>
+        {# <nav>
+          <a href="#" class="menu-item">Date</a>
+          <a href="#" class="menu-item">Clients</a>
+          <a href="#" class="menu-item">Sections</a>
+          <a href="#" class="menu-item">Products</a>
+        </nav> #}
+      </div>
+      <div class="wrapper">
 
-
-<div class="d-flex">
-
-<div class="">
-    {% if is_granted('ROLE_ADMIN') %}
-        <p class="text-center">Mode Admin</p>
-    {% elseif is_granted('ROLE_DIRECTEURRH') %}
-        <p class="text-center">Mode Directeur RH Connecté</p>
-    {% elseif is_granted('ROLE_RESPONSABLE_HIERA') %}
-        <p class="text-center">Mode Responsable Hierarchique Connecté</p>
-    {% elseif is_granted('ROLE_REFERENT_FRAIS') %}
-        <p class="text-center">Mode Référent frais Connecté</p>
-    {% elseif is_granted('ROLE_RTT') %}
-        <p class="text-center">Mode RTT Connecté</p>
-    {% elseif is_granted('ROLE_CONNECT') %}
-        <p class="text-center">Mode User Connecté</p>
-    {% else %}
-        <p>No log</p>
-    {% endif %}
-
-
-
-
-</div>
-
-
-
-</div>
-
-
-
-   
 {% endblock %}

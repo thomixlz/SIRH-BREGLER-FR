@@ -31,6 +31,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
         <!-- 🔖 CSS 🔖 -->
+        <link rel="stylesheet" href="{{ asset('assets/css/admin/admin.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/sidebar.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/slick-theme.css') }}">
@@ -55,23 +56,23 @@
             <br>
                 {% if is_granted('ROLE_ADMIN') %}
                     <p class="text-center">Mode Admin</p>
-                {% elseif is_granted('ROLE_CONNECT') %}
-                    <p class="text-center">Mode User Connecté</p>
                 {% elseif is_granted('ROLE_DIRECTEURRH') %}
-                    <p class="text-center">Mode User Connecté</p>
+                    <p class="text-center">Mode Directeur RH</p>
                 {% elseif is_granted('ROLE_RESPONSABLE_HIERA') %}
-                    <p class="text-center">Mode User Connecté</p>
+                    <p class="text-center">Mode Responsable Hierarchique</p>
                 {% elseif is_granted('ROLE_REFERENT_FRAIS') %}
-                    <p class="text-center">Mode User Connecté</p>
+                    <p class="text-center">Mode Référent frais</p>
                 {% elseif is_granted('ROLE_RTT') %}
-                    <p class="text-center">Mode RTT Connecté</p>
+                    <p class="text-center">Mode RTT</p>
+                {% elseif is_granted('ROLE_CONNECT') %}
+                    <p class="text-center">Mode User</p>
                 {% else %}
-                    <p class="text-center">Mode Non Connecté</p>
+                    <p>No log</p>
                 {% endif %}
           </span>
         </div>
         <nav class="primary">
-            <a href="#" class="menu-item active">
+            <a href="{{ path('app_home') }}" class="menu-item active">
                 <span class="iconoir-report-columns"></span>
                 <span class="desc">Dashboard</span>
             </a>
@@ -87,7 +88,7 @@
                 <span class="iconoir-table"></span>
                 <span class="desc">Équipes</span>
             </a>
-            <a href="#" class="menu-item">
+            <a href="{{ path('app_user_index') }}" class="menu-item">
                 <span class="iconoir-user"></span>
                 <span class="desc">Employés</span>
             </a>
@@ -103,16 +104,9 @@
         </nav>
         <span class="expander iconoir-arrow-right"></span>
       </div>
-      <div class="topbar">
-        <h1 class="current">SIRH - MNS</h1>
-        <nav>
-          <a href="#" class="menu-item">Orders</a>
-          <a href="#" class="menu-item">Clients</a>
-          <a href="#" class="menu-item">Sections</a>
-          <a href="#" class="menu-item">Products</a>
-        </nav>
-      </div>
-      <div class="wrapper">
+
+      
+      
 
             {% block body %}{% endblock %}
         </div>
