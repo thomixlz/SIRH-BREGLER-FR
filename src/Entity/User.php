@@ -45,6 +45,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateNaissance = null;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Equipe $equipe = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -83,6 +86,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
+        if (empty($roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+
         return array_unique($roles);
     }
 
@@ -92,6 +99,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
+
+        if (empty($roles)) {
+            $roles = ['ROLE_USER'];
+        }
+
 
         return $this;
     }
@@ -164,6 +176,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDateNaissance(?\DateTimeInterface $dateNaissance): static
     {
         $this->dateNaissance = $dateNaissance;
+
+        return $this;
+    }
+
+    public function getEquipe(): ?Equipe
+    {
+        return $this->equipe;
+    }
+
+    public function setEquipe(?Equipe $equipe): static
+    {
+        $this->equipe = $equipe;
 
         return $this;
     }

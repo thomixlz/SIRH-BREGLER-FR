@@ -3,11 +3,15 @@
 {% block title %}Edit User{% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
+<div class="topbar">
+    <h1 class="current"><b>SIRH - MNS</b> | <span>ÉDITER L'UTILISATEUR : {{user.nom}} {{user.prenom}}</span> </h1>
+    <nav>
+        <a class="menu-item" href="{{ path('app_user_index') }}"><span class="iconoir-arrow-email-forward mr-2"></span>Retour à la liste des utilisateurs</a>
+    </nav>
+</div>
+    <div class="wrapper">
 
     {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
 
-    {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

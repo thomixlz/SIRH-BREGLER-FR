@@ -37,6 +37,15 @@ BREGLER Thomas (@thomixlz)
 
 ## Version History
 
+* 0.5 :
+    * Add not able to delete or edit Superadmin account
+    * Add Equipe Crud 
+    * Add Image upload system 
+    * Add a lot of cond about roles 
+    * Add date picker js in form
+    * Add local Mailer with Mailhog for send to a new user password when u create new account as superadmin(WORK)
+
+
 * 0.4 :
     * Add All Roles
     * Add All Routes about the roles for the security

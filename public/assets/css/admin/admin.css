@@ -39,3 +39,43 @@
     color: #fff;
 }
 
+.table-admin .img-tab{
+ 
+        width: 35px; /* Largeur du rond */
+        height: 35px; /* Hauteur du rond */
+        border-radius: 50%; /* Rend l'image circulaire */
+        object-fit: cover; /* Ajuste l'image pour remplir le rond sans déformation */
+    
+   
+}
+
+/* Masquer le champ de téléchargement de fichiers réel */
+#image-upload {
+    display: none;
+}
+
+/* Styliser le label pour qu'il ressemble à un bouton */
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Ajouter un effet au survol du bouton */
+.custom-file-upload:hover {
+    background-color: #0056b3;
+}
+
+/* Ajouter un effet d'ombre pour plus de style */
+.custom-file-upload:active {
+    background-color: #004494;
+    box-shadow: inset 0px 0px 5px #ccc;
+}
+
+
