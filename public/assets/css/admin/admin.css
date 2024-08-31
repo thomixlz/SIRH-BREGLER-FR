@@ -15,7 +15,7 @@
     font-size: 18px;
     border-top: 0px!important;
     vertical-align: bottom;
-    border-bottom: 6px solid rgba(255, 255, 255, 0.407);
+    border-bottom: 6px solid rgba(255, 255, 255, 0.129)!important;
     border-radius: 50%;
 
 }
@@ -41,20 +41,16 @@
 
 .table-admin .img-tab{
  
-        width: 35px; /* Largeur du rond */
-        height: 35px; /* Hauteur du rond */
-        border-radius: 50%; /* Rend l'image circulaire */
-        object-fit: cover; /* Ajuste l'image pour remplir le rond sans déformation */
-    
-   
+        width: 35px; 
+        height: 35px; 
+        border-radius: 50%; 
+        object-fit: cover; 
 }
 
-/* Masquer le champ de téléchargement de fichiers réel */
 #image-upload {
     display: none;
 }
 
-/* Styliser le label pour qu'il ressemble à un bouton */
 .custom-file-upload {
     border: 1px solid #ccc;
     display: inline-block;
@@ -67,15 +63,88 @@
     font-weight: bold;
 }
 
-/* Ajouter un effet au survol du bouton */
 .custom-file-upload:hover {
     background-color: #0056b3;
 }
 
-/* Ajouter un effet d'ombre pour plus de style */
 .custom-file-upload:active {
     background-color: #004494;
     box-shadow: inset 0px 0px 5px #ccc;
+}
+
+
+.btn-crud{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    color: white;
+    border: 0;
+    border-radius: var(--max-radius);
+    background-color: #3977996f;
+    -webkit-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    outline:0!important;
+}
+
+.btn-crud:hover{
+    background-color: #397799bd;
+}
+
+.iconoir-btn-ed{
+    position:relative;
+    top:2.5px;
+}
+
+.btn-edit{
+    background-color: rgba(249, 237, 17, 0.269)!important;
+    border-radius: var(--max-radius)!important;
+    transition: 0.2s all!important;
+    border: 1px solid rgba(249, 168, 17, 0.501)!important;
+}
+
+.btn-edit:hover{
+    background-color: rgb(249, 168, 17)!important;
+}
+
+.btn-delete{
+    border-radius: var(--max-radius)!important;
+    transition: 0.2s all!important;
+    background-color: #dc35466e!important;
+}
+
+.btn-delete:hover{
+    background-color: #dc3546!important;
+}
+
+.form-check {
+    display: block;
+    margin-bottom: 0.5rem; /* Espacement entre les cases à cocher */
+}
+
+.form-check-input {
+    margin-right: 0.5rem; /* Espacement entre la case à cocher et le label */
+}
+
+#user_roles label {
+    margin-right: 25px;
+    margin-left: 6px;
+}
+
+.champ-form h3{
+    margin-bottom: 10px;
+}
+.champ-form input{
+    margin-bottom: 10px;
+    border-radius: var(--max-radius)!important;
+    background: var(--c-dark);
+    color: white;
+
 }
 
 

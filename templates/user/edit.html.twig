@@ -3,15 +3,30 @@
 {% block title %}Edit User{% endblock %}
 
 {% block body %}
-<div class="topbar">
-    <h1 class="current"><b>SIRH - MNS</b> | <span>ÉDITER L'UTILISATEUR : {{user.nom}} {{user.prenom}}</span> </h1>
-    <nav>
-        <a class="menu-item" href="{{ path('app_user_index') }}"><span class="iconoir-arrow-email-forward mr-2"></span>Retour à la liste des utilisateurs</a>
-    </nav>
-</div>
+    <div class="topbar">
+        <h1 class="current"><b>SIRH - MNS</b> | <span>ÉDITER L'UTILISATEUR : {{user.nom}} {{user.prenom}}</span> </h1>
+        <nav>
+            <a href="#" onclick="return generateNewPassword({{ user.id }});" class="menu-item"><span class="iconoir-key-plus mr-2"></span>Générer un nouveau mot de passe</a>
+            <a class="menu-item" href="{{ path('app_user_index') }}"><span class="iconoir-arrow-email-forward mr-2"></span>Retour à la liste des utilisateurs</a>
+        </nav>
+    </div>
     <div class="wrapper">
+        {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+    
 
-    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+    <script>
+        function generateNewPassword(userId) {
+            if (confirm('Le nouveau mot de passe du compte a été envoyé par mail à l\'utilisateur !')) {
+                window.location.href = '{{ path('app_user_generate_password', { id: 'userId' }) }}'.replace('userId', userId);
+            }
+            return false; 
+        }
+    </script>
 
+    <style>
+    .wrapper{
+        width: 145%;
+    }
+    </style>
 
 {% endblock %}

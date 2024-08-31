@@ -1,8 +1,7 @@
 
 {{ form_start(form) }}
 
-
-    <div class="col-12 container-form">
+    <div class="col-12 champ-form container-form">
         <h3>Ajouter Image</h3>
         {% if user.image %}
             <img src="{{ asset('uploads/user/' ~ user.image) }}" width="136">
@@ -10,37 +9,45 @@
         {{ form_row(form.image, { 'attr': {'placeholder': 'Image' } }) }}
     </div>
 
-    <div class="col-12 container-form">
+    <div class="col-12 champ-form container-form">
         <h3>Email</h3>
         {{ form_row(form.email, { 'attr': { 'class': 'form-control', 'placeholder': 'Email' } }) }}
     </div>
 
-    <div class="col-12">
+    <div class="col-12 champ-form">
         <h3>Roles</h3>
         {{ form_row(form.roles) }}
     </div>
 
-    <div class="col-12 container-form">
+    <div class="col-12 champ-form container-form">
         <h3>Nom</h3>
         {{ form_row(form.nom, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
     </div>
 
-    <div class="col-12 container-form">
+    <div class="col-12 champ-form container-form">
         <h3>Prénom</h3>
         {{ form_row(form.prenom, { 'attr': { 'class': 'form-control', 'placeholder': 'Prénom' } }) }}
     </div>
 
 
-    <div class="col-12">
+    <div class="col-12 champ-form">
         <h3>Date de naissance</h3>
         {{ form_row(form.dateNaissance, { 'attr': { 'class': 'form-control', 'placeholder': 'Date de naissance' } }) }}
     </div>
 
-    <div class="col-12">
-                <div class="modal-submit d-flex justify-content-center">
-                <button type="submit" class=" btnAdd">Enregistrer</button>
-            </div>
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <div class="modal-submit d-flex justify-content-center">
+            <button type="submit" class="btn-crud">Enregistrer</button>
+        </div>
+    </div>
+
+
+
+
+   
 
 
 
     {{ form_end(form) }}
+
+    </div>

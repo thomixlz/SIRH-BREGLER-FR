@@ -187,4 +187,25 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/{id}/generate-password', name: 'app_user_generate_password', methods: ['GET'])]
+public function generatePassword(User $user, EntityManagerInterface $entityManager): Response
+{
+    // Génération du nouveau mot de passe
+    $newPassword = $this->generateRandomPassword();
+    $encodedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+    $user->setPassword($encodedPassword);
+
+    // Enregistrer les modifications en base de données
+    $entityManager->flush();
+
+    // Envoyer le mot de passe par e-mail
+    $this->sendPasswordEmail($user->getEmail(), $newPassword);
+
+    // Redirection avec message de succès
+    $this->addFlash('success', 'Un nouveau mot de passe a été généré et envoyé par e-mail.');
+
+    return $this->redirectToRoute('app_user_edit', ['id' => $user->getId()]);
+}
+
 }

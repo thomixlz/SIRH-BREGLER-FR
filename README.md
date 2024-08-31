@@ -37,6 +37,10 @@ BREGLER Thomas (@thomixlz)
 
 ## Version History
 
+* 0.6 :
+    * Add in edit users a button with "generate password" and send the mail with new log to the users
+    * Change design in cms
+
 * 0.5 :
     * Add not able to delete or edit Superadmin account
     * Add Equipe Crud 
