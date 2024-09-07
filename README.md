@@ -16,14 +16,16 @@ This project is a simulation of a project that could be implemented in any organ
 
 * How to run the program
 
-** You need to have Symfony CLI and composer and use mini php 8.1  
+** You need to have Symfony CLI and composer and use mini php 8.1 ** 
 
-*** install symfony base packet 
+- Install symfony base packet 
 
 ```
 composer update
 ```
-*** and start the program 
+
+- And start the program 
+
 ```
 symfony server:start
 ```
@@ -47,6 +49,11 @@ Contributors names and contact info :
 BREGLER Thomas (@thomixlz) 
 
 ## Version History
+
+* 0.7 : 
+    * Add teams crud with recursive hierarchical relationship for the other less team 
+    * Add adding users in teams 
+    * Add You can add owner in the teams
 
 * 0.6 :
     * Add in edit users a button with "generate password" and send the mail with new log to the users
