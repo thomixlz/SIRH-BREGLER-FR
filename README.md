@@ -50,7 +50,11 @@ BREGLER Thomas (@thomixlz)
 
 ## Version History
 
-* 0.7 : 
+* 0.9 : 
+    * Add Absences crud and system
+    * Add Document uploads
+
+* 0.8 : 
     * Add Frais Deplacement crud
     * Add Google map API
     * Add Google map Javascript API to generate real adress propal 

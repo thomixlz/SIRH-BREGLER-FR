@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New TypesAbsences{% endblock %}
+
+{% block body %}
+    <h1>Create new TypesAbsences</h1>
+
+    {{ include('types_absences/_form.html.twig') }}
+
+    <a href="{{ path('app_types_absences_index') }}">back to list</a>
+{% endblock %}

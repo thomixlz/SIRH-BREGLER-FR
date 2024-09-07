@@ -52,12 +52,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?Equipe $equipe = null;
 
     /**
-     * @var Collection<int, Absence>
-     */
-    #[ORM\OneToMany(targetEntity: Absence::class, mappedBy: 'employee')]
-    private Collection $absences;
-
-    /**
      * @var Collection<int, Equipe>
      */
     #[ORM\OneToMany(targetEntity: Equipe::class, mappedBy: 'Responsable')]
@@ -69,12 +63,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Deplacement::class, mappedBy: 'user')]
     private Collection $deplacements;
 
+    /**
+     * @var Collection<int, Absences>
+     */
+    #[ORM\OneToMany(targetEntity: Absences::class, mappedBy: 'user')]
+    private Collection $absences;
+
     public function __construct()
     {
-        $this->absences = new ArrayCollection();
         $this->fraisDeplacements = new ArrayCollection();
         $this->responsable = new ArrayCollection();
         $this->deplacements = new ArrayCollection();
+        $this->absences = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -211,37 +211,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Absence>
-     */
-    public function getAbsences(): Collection
-    {
-        return $this->absences;
-    }
-
-    public function addAbsence(Absence $absence): static
-    {
-        if (!$this->absences->contains($absence)) {
-            $this->absences->add($absence);
-            $absence->setEmployee($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAbsence(Absence $absence): static
-    {
-        if ($this->absences->removeElement($absence)) {
-            // set the owning side to null (unless already changed)
-            if ($absence->getEmployee() === $this) {
-                $absence->setEmployee(null);
-            }
-        }
-
-        return $this;
-    }
-
-
-    /**
      * @return Collection<int, Equipe>
      */
     public function getResponsable(): Collection
@@ -295,6 +264,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($deplacement->getUser() === $this) {
                 $deplacement->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Absences>
+     */
+    public function getAbsences(): Collection
+    {
+        return $this->absences;
+    }
+
+    public function addAbsence(Absences $absence): static
+    {
+        if (!$this->absences->contains($absence)) {
+            $this->absences->add($absence);
+            $absence->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAbsence(Absences $absence): static
+    {
+        if ($this->absences->removeElement($absence)) {
+            // set the owning side to null (unless already changed)
+            if ($absence->getUser() === $this) {
+                $absence->setUser(null);
             }
         }
 

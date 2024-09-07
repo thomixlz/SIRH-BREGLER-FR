@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Absences{% endblock %}
+
+{% block body %}
+    <h1>Absences</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ absence.id }}</td>
+            </tr>
+            <tr>
+                <th>DateDebut</th>
+                <td>{{ absence.dateDebut ? absence.dateDebut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateFin</th>
+                <td>{{ absence.dateFin ? absence.dateFin|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Raison</th>
+                <td>{{ absence.raison }}</td>
+            </tr>
+            <tr>
+            
+                <th>Document</th>
+                <td>
+                    <a class="mr-2" style="color:white" href="{{ asset('uploads/absences/' ~ absence.document) }}" target="_blank"><i class="fa-solid fa-eye"></i></a>
+                </td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ absence.createdAt ? absence.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ absence.updatedAt ? absence.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_absences_index') }}">back to list</a>
+
+    <a href="{{ path('app_absences_edit', {'id': absence.id}) }}">edit</a>
+
+    {{ include('absences/_delete_form.html.twig') }}
+{% endblock %}

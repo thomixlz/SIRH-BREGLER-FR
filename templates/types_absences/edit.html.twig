@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit TypesAbsences{% endblock %}
+
+{% block body %}
+    <h1>Edit TypesAbsences</h1>
+
+    {{ include('types_absences/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_types_absences_index') }}">back to list</a>
+
+    {{ include('types_absences/_delete_form.html.twig') }}
+{% endblock %}

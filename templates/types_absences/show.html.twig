@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypesAbsences{% endblock %}
+
+{% block body %}
+    <h1>TypesAbsences</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ types_absence.id }}</td>
+            </tr>
+            <tr>
+                <th>Libelle</th>
+                <td>{{ types_absence.libelle }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_types_absences_index') }}">back to list</a>
+
+    <a href="{{ path('app_types_absences_edit', {'id': types_absence.id}) }}">edit</a>
+
+    {{ include('types_absences/_delete_form.html.twig') }}
+{% endblock %}
