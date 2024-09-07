@@ -50,6 +50,10 @@ BREGLER Thomas (@thomixlz)
 
 ## Version History
 
+* 0.10 : 
+    * Add Event and Calendar system
+    * Add and Use Full Calendar with js
+
 * 0.9 : 
     * Add Absences crud and system
     * Add Document uploads

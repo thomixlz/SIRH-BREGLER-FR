@@ -35,10 +35,17 @@ class Equipe
     #[ORM\ManyToOne(inversedBy: 'responsable')]
     private ?User $Responsable = null;
 
+    /**
+     * @var Collection<int, Event>
+     */
+    #[ORM\OneToMany(targetEntity: Event::class, mappedBy: 'equipe')]
+    private Collection $events;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->children = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -150,6 +157,36 @@ class Equipe
     public function setResponsable(?User $Responsable): static
     {
         $this->Responsable = $Responsable;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): static
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->setEquipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): static
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getEquipe() === $this) {
+                $event->setEquipe(null);
+            }
+        }
 
         return $this;
     }
