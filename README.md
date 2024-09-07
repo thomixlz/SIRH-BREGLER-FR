@@ -51,6 +51,12 @@ BREGLER Thomas (@thomixlz)
 ## Version History
 
 * 0.7 : 
+    * Add Frais Deplacement crud
+    * Add Google map API
+    * Add Google map Javascript API to generate real adress propal 
+    * Add Matrix API to calculate distance
+    
+* 0.7 : 
     * Add teams crud with recursive hierarchical relationship for the other less team 
     * Add adding users in teams 
     * Add You can add owner in the teams

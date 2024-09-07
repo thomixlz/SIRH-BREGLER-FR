@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Deplacement index{% endblock %}
+
+{% block body %}
+<div class="topbar">
+        <h1 class="current"><b>SIRH - MNS</b> | <span>GESTION DEPLACEMENT</span> </h1>
+        <nav>
+          <a href="{{ path('app_user_new') }}" class="menu-item"><span class="iconoir-plus-circle-solid mr-2"></span>Ajouter utilisateurs</a>
+        </nav>
+      </div>
+      <div class="wrapper">
+      
+    <table class="table table-admin">
+
+        <thead>
+            <tr>
+                <th>Demande par</th>
+                <th>Distance</th>
+                <th>Cout</th>
+                <th>Etat</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for deplacement in deplacements %}
+            <tr>
+               <td>{{ deplacement.user.nom }} {{ deplacement.user.prenom }}</td> <!-- Affiche le nom de l'utilisateur -->
+
+                <td>{{ deplacement.distance }}</td>
+                <td>{{ deplacement.cout }}</td>
+                <td class="status">
+                        {% if deplacement.etat == "Non" %}
+                            <span class="desactive">Non</span>
+                        {% elseif deplacement.etat == "Attente" %}
+                            <span class="attente">En attente</span>
+                        {% else %}   
+                            <span class="active">Oui</span>
+                        {% endif %}  
+                    </td>
+                
+
+                <td class="d-flex justify-content-center align-items-center">
+                    <a href="{{ path('app_deplacement_edit', {'id': deplacement.id}) }}" class="btn-edit btn btn-sm btn-danger mr-2">
+                        <span class="iconoir-design-pencil iconoir-btn-ed mr-1"></span> Edit
+                    </a>
+                    <form method="post" action="{{ path('app_deplacement_delete', {'id': deplacement.id}) }}" class="m-0">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ deplacement.id) }}">
+                        <button type="submit" class="btn-delete btn btn-sm btn-danger d-flex" onclick="return confirm('Êtes-vous sûr de vouloir supprimer le déplacement ?');">
+                            <span class="iconoir-trash-solid iconoir-btn-ed mr-1"></span> Supprimer
+                        </button>
+                    </form>
+                </td>
+              
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_deplacement_new') }}">Create new</a>
+{% endblock %}

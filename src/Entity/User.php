@@ -58,22 +58,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $absences;
 
     /**
-     * @var Collection<int, FraisDeplacement>
-     */
-    #[ORM\OneToMany(targetEntity: FraisDeplacement::class, mappedBy: 'user')]
-    private Collection $fraisDeplacements;
-
-    /**
      * @var Collection<int, Equipe>
      */
     #[ORM\OneToMany(targetEntity: Equipe::class, mappedBy: 'Responsable')]
     private Collection $responsable;
+
+    /**
+     * @var Collection<int, Deplacement>
+     */
+    #[ORM\OneToMany(targetEntity: Deplacement::class, mappedBy: 'user')]
+    private Collection $deplacements;
 
     public function __construct()
     {
         $this->absences = new ArrayCollection();
         $this->fraisDeplacements = new ArrayCollection();
         $this->responsable = new ArrayCollection();
+        $this->deplacements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -239,35 +240,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, FraisDeplacement>
-     */
-    public function getFraisDeplacements(): Collection
-    {
-        return $this->fraisDeplacements;
-    }
-
-    public function addFraisDeplacement(FraisDeplacement $fraisDeplacement): static
-    {
-        if (!$this->fraisDeplacements->contains($fraisDeplacement)) {
-            $this->fraisDeplacements->add($fraisDeplacement);
-            $fraisDeplacement->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFraisDeplacement(FraisDeplacement $fraisDeplacement): static
-    {
-        if ($this->fraisDeplacements->removeElement($fraisDeplacement)) {
-            // set the owning side to null (unless already changed)
-            if ($fraisDeplacement->getUser() === $this) {
-                $fraisDeplacement->setUser(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Equipe>
@@ -293,6 +265,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($responsable->getResponsable() === $this) {
                 $responsable->setResponsable(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Deplacement>
+     */
+    public function getDeplacements(): Collection
+    {
+        return $this->deplacements;
+    }
+
+    public function addDeplacement(Deplacement $deplacement): static
+    {
+        if (!$this->deplacements->contains($deplacement)) {
+            $this->deplacements->add($deplacement);
+            $deplacement->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDeplacement(Deplacement $deplacement): static
+    {
+        if ($this->deplacements->removeElement($deplacement)) {
+            // set the owning side to null (unless already changed)
+            if ($deplacement->getUser() === $this) {
+                $deplacement->setUser(null);
             }
         }
 

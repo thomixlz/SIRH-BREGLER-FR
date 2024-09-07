@@ -147,4 +147,50 @@
 
 }
 
+.table-admin tbody .status {
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.table-admin tbody td.status .active {
+    background: #cff6dd;
+    color: #1fa750;
+}
+
+.table-admin tbody td.status .attente  {
+    background: #f7d38f;
+    color: #ff7800;
+}
+.table-admin tbody td.status span {
+    position: relative;
+    border-radius: 30px;
+    padding: 4px 10px 4px 25px;
+}
+
+.table-admin tbody td.status .attente:after {
+    background: #ff7800;
+}
+
+.table-admin tbody td.status .active:after {
+    background: #23bd5a;
+}
+.table-admin tbody td.status span:after {
+    position: absolute;
+    top: 9px;
+    left: 10px;
+    width: 10px;
+    height: 10px;
+    content: '';
+    border-radius: 50%;
+}
+.table-admin tbody td.status .desactive {
+    background: #f6cfcf;
+    color: #c82020;
+}
+
+.table-admin tbody td.status .desactive:after {
+    background: #c82020;
+}
+
 

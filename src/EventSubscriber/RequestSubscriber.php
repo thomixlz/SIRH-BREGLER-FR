@@ -30,18 +30,38 @@ class RequestSubscriber implements EventSubscriberInterface
         ];
     }
 
+
     public function onKernelRequest(RequestEvent $event)
     {
         $user = $this->security->getUser();
 
-        if ($user && !in_array('ROLE_USER', $user->getRoles())) {
-            $user->setRoles(['ROLE_USER']);
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
+        $specificRoles = [
+            'ROLE_ADMIN',
+            'ROLE_DIRECTEURRH',
+            'ROLE_RESPONSABLE_HIERA',
+            'ROLE_REFERENT_FRAIS',
+            'ROLE_RTT'
+        ];
 
-            $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
-            $this->security->setToken($token);
+        if ($user) {
+            foreach ($specificRoles as $role) {
+                if (in_array($role, $user->getRoles())) {
+                    return; 
+                }
+            }
+
+            if (!in_array('ROLE_USER', $user->getRoles())) {
+                $roles = $user->getRoles();
+                $roles[] = 'ROLE_USER';
+                $user->setRoles(array_unique($roles));  // Évite les doublons
+
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
+
+                $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+                $this->security->setToken($token);
+            }
         }
-
     }
+
 }

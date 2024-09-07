@@ -1,4 +1,73 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&libraries=places&callback=initAutocomplete">
+</script>
+<input type="text" id="adresse-depart" name="adresseDepart" class="form-control">
+<input type="text" id="adresse-arrive" name="adresseArrive" class="form-control">
+
+    <div>
+        {{ form_label(form.distance) }}
+        {{ form_widget(form.distance, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+
+    <div>
+        {{ form_label(form.cout) }}
+        {{ form_widget(form.cout, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+
+    <div>
+        {{ form_label(form.etat) }}
+        {{ form_widget(form.etat, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+
+    <div>
+        {{ form_label(form.user) }}
+        {{ form_widget(form.user, { 'attr': {'class': 'form-control'} }) }}
+    </div>
+
     <button class="btn">{{ button_label|default('Save') }}</button>
+
+    <script>
+
+    const departInput = document.getElementById('adresse-depart');
+const arriveInput = document.getElementById('adresse-arrive');
+
+
+  function initAutocomplete() {
+    console.log('API Google Maps chargée.');
+    
+    const departInput = document.getElementById('adresse-depart');
+    const arriveInput = document.getElementById('adresse-arrive');
+
+    if (!departInput || !arriveInput) {
+        console.error('Les champs de formulaire ne sont pas trouvés.');
+        return;
+    }
+
+    const departAutocomplete = new google.maps.places.Autocomplete(departInput);
+    const arriveAutocomplete = new google.maps.places.Autocomplete(arriveInput);
+
+    departAutocomplete.addListener('place_changed', function() {
+        const place = departAutocomplete.getPlace();
+        console.log('Lieu de départ sélectionné :', place.formatted_address);
+    });
+
+    arriveAutocomplete.addListener('place_changed', function() {
+        const place = arriveAutocomplete.getPlace();
+        console.log('Lieu d’arrivée sélectionné :', place.formatted_address);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    console.log('Document chargé.');
+    initAutocomplete();
+});
+
+</script>
+
+
+
+
+
 {{ form_end(form) }}

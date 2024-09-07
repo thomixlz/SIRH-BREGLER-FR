@@ -1,0 +1,114 @@
+{{ form_start(form) }}
+
+
+<style>
+.hidden{}
+</style>
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&libraries=places&callback=initAutocomplete">
+</script>
+
+<!-- Champs visibles pour les adresses -->
+<input type="text" id="adresse-depart" name="adresseDepartVisible" value="{{ deplacement.adresseDepart }}" class="form-control">
+<input type="text" id="adresse-arrive" name="adresseArriveVisible" value="{{ deplacement.adresseArrive }}" class="form-control">
+
+<!-- Champs cachés pour stocker les adresses formatées -->
+<input type="hidden" id="adresse-depart-cache" name="adresseDepartCache" value="{{ deplacement.adresseDepart }}">
+<input type="hidden" id="adresse-arrive-cache" name="adresseArriveCache" value="{{ deplacement.adresseArrive }}">
+
+<!-- Champ caché pour la distance -->
+<input type="hidden" id="distance-cache" name="distanceCache" value="{{ deplacement.distance }}">
+
+
+{{ form_widget(form.adresseDepart, { 'attr': {'class': 'hidden'} }) }}
+{{ form_widget(form.adresseArrive, { 'attr': {'class': 'hidden'} }) }}
+
+
+<div>
+    {{ form_label(form.distance) }}
+    {{ form_widget(form.distance, { 'attr': {'class': 'form-control'} }) }}
+</div>
+
+<div>
+    {{ form_label(form.cout) }}
+    {{ form_widget(form.cout, { 'attr': {'class': 'form-control'} }) }}
+</div>
+
+<div>
+    {{ form_label(form.etat) }}
+    {{ form_widget(form.etat, { 'attr': {'class': 'form-control'} }) }}
+</div>
+
+<div>
+    {{ form_label(form.user) }}
+    {{ form_widget(form.user, { 'attr': {'class': 'form-control'} }) }}
+</div>
+
+<button class="btn">{{ button_label|default('Save') }}</button>
+
+<script>
+
+const departInput = document.getElementById('adresse-depart');
+const arriveInput = document.getElementById('adresse-arrive');
+const departCacheInput = document.getElementById('adresse-depart-cache');
+const arriveCacheInput = document.getElementById('adresse-arrive-cache');
+
+function initAutocomplete() {
+    console.log('API Google Maps chargée.');
+
+    const departAutocomplete = new google.maps.places.Autocomplete(departInput);
+    const arriveAutocomplete = new google.maps.places.Autocomplete(arriveInput);
+
+    departAutocomplete.addListener('place_changed', function() {
+        const place = departAutocomplete.getPlace();
+        departCacheInput.value = place.formatted_address;  // Stocke l'adresse formatée dans le champ caché
+        console.log('Lieu de départ sélectionné :', place.formatted_address);
+        calculateDistance();  // Vérifie si on peut calculer la distance
+    });
+
+    arriveAutocomplete.addListener('place_changed', function() {
+        const place = arriveAutocomplete.getPlace();
+        arriveCacheInput.value = place.formatted_address;  // Stocke l'adresse formatée dans le champ caché
+        console.log('Lieu d’arrivée sélectionné :', place.formatted_address);
+        calculateDistance();  // Vérifie si on peut calculer la distance
+    });
+}
+
+function calculateDistance() {
+    const departAddress = departCacheInput.value;
+    const arriveAddress = arriveCacheInput.value;
+
+    if (departAddress && arriveAddress) {
+        const service = new google.maps.DistanceMatrixService();
+        service.getDistanceMatrix(
+        {
+            origins: [departAddress],
+            destinations: [arriveAddress],
+            travelMode: 'DRIVING',
+            unitSystem: google.maps.UnitSystem.METRIC,
+        }, function(response, status) {
+            if (status === 'OK') {
+                const results = response.rows[0].elements[0];
+                if (results.status === 'OK') {
+                    const distance = results.distance.value / 1000;  // Distance en kilomètres
+                    console.log('Distance calculée :', distance + ' km');
+                    document.getElementById('distance-cache').value = distance;  // Stocke la distance dans le champ caché
+                } else {
+                    console.error('Aucun résultat pour la distance entre ces deux lieux.');
+                }
+            } else {
+                console.error('Erreur lors du calcul de la distance :', status);
+            }
+        });
+    }
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    console.log('Document chargé.');
+    initAutocomplete();
+});
+
+</script>
+
+{{ form_end(form) }}

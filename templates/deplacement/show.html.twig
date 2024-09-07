@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Deplacement{% endblock %}
+
+{% block body %}
+    <h1>Deplacement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ deplacement.id }}</td>
+            </tr>
+            <tr>
+                <th>AdresseDepart</th>
+                <td>{{ deplacement.adresseDepart }}</td>
+            </tr>
+            <tr>
+                <th>AdresseArrive</th>
+                <td>{{ deplacement.adresseArrive }}</td>
+            </tr>
+            <tr>
+                <th>Distance</th>
+                <td>{{ deplacement.distance }}</td>
+            </tr>
+            <tr>
+                <th>Cout</th>
+                <td>{{ deplacement.cout }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ deplacement.etat }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_deplacement_index') }}">back to list</a>
+
+    <a href="{{ path('app_deplacement_edit', {'id': deplacement.id}) }}">edit</a>
+
+    {{ include('deplacement/_delete_form.html.twig') }}
+{% endblock %}
