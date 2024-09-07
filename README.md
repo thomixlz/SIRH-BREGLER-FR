@@ -4,15 +4,26 @@ This project is a simulation of a project that could be implemented in any organ
 
 ## Getting Started
 
-### Technologies ?
+### Technologies 
 
 * HTML / CSS
 * Javascript / Jquery
 * PHP Symfony 6.4
+* Symfony CLI
+* Composer 
 
 ### Executing program
 
 * How to run the program
+
+** You need to have Symfony CLI and composer and use mini php 8.1  
+
+*** install symfony base packet 
+
+```
+composer update
+```
+*** and start the program 
 ```
 symfony server:start
 ```

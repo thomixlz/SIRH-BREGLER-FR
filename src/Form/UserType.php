@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Equipe;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -37,12 +38,15 @@ class UserType extends AbstractType
                     'Responsable Hiérarchique' => 'ROLE_RESPONSABLE_HIERA',
                     'Référent Frais' => 'ROLE_REFERENT_FRAIS',
                     'RTT' => 'ROLE_RTT',
+                    'Collaborateur' => 'ROLE_COLLABORATEUR',
                 ],
                 'multiple' => true,
                 'expanded' => true,
                 'label' => false,
+                'data' => ['ROLE_USER'],
+                'required' => true
             ])
-          
+
             ->add('image', FileType::class, [
                 'data_class' => null,
                 'required' => false,
@@ -66,6 +70,10 @@ class UserType extends AbstractType
                 'attr' => [
                     'class' => 'js-datepicker'  // Classe pour appliquer des styles ou des comportements JavaScript
                 ]
+            ])
+            ->add('equipe', EntityType::class, [
+                'class' => Equipe::class,
+                'choice_label' => 'nom'
             ])
         ;
     }

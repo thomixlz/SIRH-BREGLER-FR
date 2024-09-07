@@ -17,7 +17,9 @@
 
         <thead>
             <tr>
+                <th>Équipe parente</th>
                 <th>Nom</th>
+                <th>Responsable Hiérarchique</th>
                 <th>Membres</th>
                 <th class="text-center">Actions</th>
             </tr>
@@ -25,8 +27,25 @@
         <tbody>
         {% for equipe in equipes %}
             <tr>
+                <td>{% if (equipe.parent != null) %}
+                        {{ equipe.parent.nom }}
+                    {% else %}
+                        Racine de la structure
+                    {% endif %}
+                </td>
                 <td>{{ equipe.nom }}</td>
-                <td>test</td>
+                <td>
+                    {% for user in equipe.users %}
+                        {% if "ROLE_RESPONSABLE_HIERA" in user.roles  %}
+                            - {{ user.nom }} <br>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for user in equipe.users %}
+                        - {{ user.nom }} <br>
+                    {% endfor %}
+                </td>
                 <td class="d-flex justify-content-center align-items-center">
                    <a href="{{ path('app_equipe_edit', {'id': equipe.id}) }}" class="btn btn-primary btn-sm "><span class="iconoir-design-pencil mr-2"></span> Edit</a>
                     <form method="post" action="{{ path('app_equipe_delete', {'id': equipe.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">

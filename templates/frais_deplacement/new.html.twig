@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New FraisDeplacement{% endblock %}
+
+{% block body %}
+    <h1>Create new FraisDeplacement</h1>
+
+    {{ include('frais_deplacement/_form.html.twig') }}
+
+    <a href="{{ path('app_frais_deplacement_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FraisDeplacement index{% endblock %}
+
+{% block body %}
+    <h1>FraisDeplacement index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>GenericDocumentType</th>
+                <th>DocumentLocation</th>
+                <th>Cost</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>Status</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for frais_deplacement in frais_deplacements %}
+            <tr>
+                <td>{{ frais_deplacement.id }}</td>
+                <td>{{ frais_deplacement.genericDocumentType }}</td>
+                <td>{{ frais_deplacement.documentLocation }}</td>
+                <td>{{ frais_deplacement.cost }}</td>
+                <td>{{ frais_deplacement.createdAt ? frais_deplacement.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ frais_deplacement.updatedAt ? frais_deplacement.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ frais_deplacement.status }}</td>
+                <td>
+                    <a href="{{ path('app_frais_deplacement_show', {'id': frais_deplacement.id}) }}">show</a>
+                    <a href="{{ path('app_frais_deplacement_edit', {'id': frais_deplacement.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_frais_deplacement_new') }}">Create new</a>
+{% endblock %}

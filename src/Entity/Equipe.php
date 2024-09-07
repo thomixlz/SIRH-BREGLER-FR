@@ -22,9 +22,23 @@ class Equipe
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'equipe')]
     private Collection $users;
 
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', nullable: true)]
+    private ?Equipe $parent = null;
+
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
+    private Collection $children;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $minimalStaffCountBeforeAlert = null;
+
+    #[ORM\ManyToOne(inversedBy: 'responsable')]
+    private ?User $Responsable = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->children = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -70,6 +84,72 @@ class Equipe
                 $user->setEquipe(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getParent(): ?Equipe
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?Equipe $parent): static
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Equipe>
+     */
+    public function getChildren(): Collection
+    {
+        return $this->children;
+    }
+
+    public function addChild(Equipe $child): static
+    {
+        if (!$this->children->contains($child)) {
+            $this->children->add($child);
+            $child->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChild(Equipe $child): static
+    {
+        if ($this->children->removeElement($child)) {
+            // set the owning side to null (unless already changed)
+            if ($child->getParent() === $this) {
+                $child->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getMinimalStaffCountBeforeAlert(): ?int
+    {
+        return $this->minimalStaffCountBeforeAlert;
+    }
+
+    public function setMinimalStaffCountBeforeAlert(?int $minimalStaffCountBeforeAlert): static
+    {
+        $this->minimalStaffCountBeforeAlert = $minimalStaffCountBeforeAlert;
+
+        return $this;
+    }
+
+    public function getResponsable(): ?User
+    {
+        return $this->Responsable;
+    }
+
+    public function setResponsable(?User $Responsable): static
+    {
+        $this->Responsable = $Responsable;
 
         return $this;
     }

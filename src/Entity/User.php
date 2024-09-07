@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use App\Repository\EquipeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -24,7 +27,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var list<string> The user roles
      */
-    #[ORM\Column]
+    #[ORM\Column(type: 'json')]
     private array $roles = [];
 
     /**
@@ -47,6 +50,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Equipe $equipe = null;
+
+    /**
+     * @var Collection<int, Absence>
+     */
+    #[ORM\OneToMany(targetEntity: Absence::class, mappedBy: 'employee')]
+    private Collection $absences;
+
+    /**
+     * @var Collection<int, FraisDeplacement>
+     */
+    #[ORM\OneToMany(targetEntity: FraisDeplacement::class, mappedBy: 'user')]
+    private Collection $fraisDeplacements;
+
+    /**
+     * @var Collection<int, Equipe>
+     */
+    #[ORM\OneToMany(targetEntity: Equipe::class, mappedBy: 'Responsable')]
+    private Collection $responsable;
+
+    public function __construct()
+    {
+        $this->absences = new ArrayCollection();
+        $this->fraisDeplacements = new ArrayCollection();
+        $this->responsable = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -83,12 +111,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        if (empty($roles)) {
-            $roles[] = 'ROLE_USER';
-        }
 
         return array_unique($roles);
     }
@@ -99,11 +121,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
-
-        if (empty($roles)) {
-            $roles = ['ROLE_USER'];
-        }
-
 
         return $this;
     }
@@ -188,6 +205,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEquipe(?Equipe $equipe): static
     {
         $this->equipe = $equipe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Absence>
+     */
+    public function getAbsences(): Collection
+    {
+        return $this->absences;
+    }
+
+    public function addAbsence(Absence $absence): static
+    {
+        if (!$this->absences->contains($absence)) {
+            $this->absences->add($absence);
+            $absence->setEmployee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAbsence(Absence $absence): static
+    {
+        if ($this->absences->removeElement($absence)) {
+            // set the owning side to null (unless already changed)
+            if ($absence->getEmployee() === $this) {
+                $absence->setEmployee(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FraisDeplacement>
+     */
+    public function getFraisDeplacements(): Collection
+    {
+        return $this->fraisDeplacements;
+    }
+
+    public function addFraisDeplacement(FraisDeplacement $fraisDeplacement): static
+    {
+        if (!$this->fraisDeplacements->contains($fraisDeplacement)) {
+            $this->fraisDeplacements->add($fraisDeplacement);
+            $fraisDeplacement->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFraisDeplacement(FraisDeplacement $fraisDeplacement): static
+    {
+        if ($this->fraisDeplacements->removeElement($fraisDeplacement)) {
+            // set the owning side to null (unless already changed)
+            if ($fraisDeplacement->getUser() === $this) {
+                $fraisDeplacement->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Equipe>
+     */
+    public function getResponsable(): Collection
+    {
+        return $this->responsable;
+    }
+
+    public function addResponsable(Equipe $responsable): static
+    {
+        if (!$this->responsable->contains($responsable)) {
+            $this->responsable->add($responsable);
+            $responsable->setResponsable($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResponsable(Equipe $responsable): static
+    {
+        if ($this->responsable->removeElement($responsable)) {
+            // set the owning side to null (unless already changed)
+            if ($responsable->getResponsable() === $this) {
+                $responsable->setResponsable(null);
+            }
+        }
 
         return $this;
     }
