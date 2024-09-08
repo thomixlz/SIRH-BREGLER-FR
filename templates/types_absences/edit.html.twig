@@ -3,11 +3,18 @@
 {% block title %}Edit TypesAbsences{% endblock %}
 
 {% block body %}
-    <h1>Edit TypesAbsences</h1>
+     <style>
+    .wrapper{
+        width: 145%;
+    }
+    </style>
 
+    <div class="topbar">
+        <h1 class="current"><b>SIRH - MNS</b> | <span>ÉDITER TYPES ABSENCES : {{types_absence.libelle}}</span> </h1>
+        <nav>
+            <a class="menu-item" href="{{ path('app_types_absences_index') }}"><span class="iconoir-arrow-email-forward mr-2"></span>Retour à la liste des absences</a>
+        </nav>
+    </div>
+    <div class="wrapper">
     {{ include('types_absences/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_types_absences_index') }}">back to list</a>
-
-    {{ include('types_absences/_delete_form.html.twig') }}
 {% endblock %}

@@ -1,0 +1,43 @@
+{{ form_start(form) }}
+
+    <div class="col-12 champ-form container-form">
+        <h3>Affichage :</h3>
+        {{ form_row(form.affichage, { 'attr': { 'class': 'form-control', 'placeholder': 'Titre' } }) }}
+    </div>
+
+    <div class="col-12 champ-form">
+        <h3>Date :</h3>
+        <p>Date et heure actuel si champ vide :</p>
+        {{ form_row(form.date, { 'attr': { 'class': 'form-control', 'placeholder': 'Date de naissance' } }) }}
+    </div>
+
+    <div class="col-12 champ-form container-form">
+        <h3>Titre :</h3>
+        {{ form_row(form.titre, { 'attr': { 'class': 'form-control', 'placeholder': 'Titre' } }) }}
+    </div>
+
+    <div class="col-12 champ-form container-form mb-3">
+        <h3>Message :</h3>
+        {{ form_row(form.message, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
+    </div>
+
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <div class="modal-submit d-flex justify-content-center">
+            <button type="submit" class="btn-crud">Enregistrer</button>
+        </div>
+    </div>
+
+       <!-- Ckediotr -->
+    <script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
+
+    <script>
+    CKEDITOR.replace('info_message', {customConfig: '{{ asset("ckeditor_config.js") }}'});
+    </script>
+
+    <div class="d-none">
+        <h3>Message :</h3>
+        {{ form_row(form.user, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
+    </div>
+
+    
+{{ form_end(form) }}

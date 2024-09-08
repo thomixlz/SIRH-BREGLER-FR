@@ -77,14 +77,22 @@ final class DeplacementController extends AbstractController
     #[Route('/{id}', name: 'app_deplacement_show', methods: ['GET'])]
     public function show(Deplacement $deplacement): Response
     {
+
+        $user = $deplacement->getUser();
+
         return $this->render('deplacement/show.html.twig', [
             'deplacement' => $deplacement,
+            'user' => $user,
+
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_deplacement_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Deplacement $deplacement, EntityManagerInterface $entityManager): Response
     {
+
+        $user = $deplacement->getUser();
+
         $form = $this->createForm(DeplacementType::class, $deplacement);
         $form->handleRequest($request);
     
@@ -120,7 +128,9 @@ final class DeplacementController extends AbstractController
     
         return $this->render('deplacement/edit.html.twig', [
             'deplacement' => $deplacement,
+            'user' => $user,
             'form' => $form,
+
         ]);
     }
 

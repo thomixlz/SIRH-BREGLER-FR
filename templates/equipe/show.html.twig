@@ -3,24 +3,78 @@
 {% block title %}Equipe{% endblock %}
 
 {% block body %}
-    <h1>Equipe</h1>
-
-    <table class="table">
+     <div class="topbar">
+        <h1 class="current"><b>SIRH - MNS</b> | <span>EQUIPE {{equipe.nom}}</span> </h1>
+        <nav>
+            <a class="menu-item" href="{{ path('app_equipe_index') }}"><span class="iconoir-arrow-email-forward mr-2"></span>Retour à la liste des equipes</a>
+        </nav>
+      </div>
+      <div class="wrapper">
+      
+        <table class="table table-admin ">
         <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ equipe.id }}</td>
             </tr>
+
+             <tr>
+                <th>Equipe Parent</th>
+                <td>{% if (equipe.parent != null) %}
+                        {{ equipe.parent.nom }}
+                    {% else %}
+                        Racine de la structure
+                    {% endif %}
+                </td>
+            </tr>
+
+            
             <tr>
                 <th>Nom</th>
                 <td>{{ equipe.nom }}</td>
             </tr>
+            <tr>
+                <th>RESPONSABLE</th>
+                <td>
+                    {% for user in equipe.users %}
+                        {% if "ROLE_RESPONSABLE_HIERA" in user.roles  %}
+                            <a href="{{ path('app_user_show', {id: user.id}) }}">
+                                <div class="img-container">
+                                    <img class="img-profil-tab" src="{{ asset('uploads/user/' ~ user.image) }}">
+                                    <span class="tooltip-text">{{ user.nom }} {{ user.prenom }}</span>
+                                </div>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>MEMBRES</th>
+                <td>
+                    {% for user in equipe.users %}
+                        <a href="{{ path('app_user_show', {id: user.id}) }}">
+                            <div class="img-container">
+                                <img class="img-profil-tab" src="{{ asset('uploads/user/' ~ user.image) }}">
+                                <span class="tooltip-text">{{ user.nom }} {{ user.prenom }}</span>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </td>
+            </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_equipe_index') }}">back to list</a>
+    <div class="d-flex">
+        <a href="{{ path('app_equipe_edit', {'id': equipe.id}) }}" class="btn-edit btn btn-sm btn-danger mr-2">
+            <span class="iconoir-design-pencil iconoir-btn-ed mr-1"></span> Edit
+        </a>
 
-    <a href="{{ path('app_equipe_edit', {'id': equipe.id}) }}">edit</a>
+        <form method="post" action="{{ path('app_equipe_delete', {'id': equipe.id}) }}" class="m-0">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ equipe.id) }}">
+            <button type="submit" class="btn-delete btn btn-sm btn-danger d-flex" onclick="return confirm('Êtes-vous sûr de vouloir supprimer l'equipe ?');">
+                <span class="iconoir-trash-solid iconoir-btn-ed mr-1"></span> Supprimer
+            </button>
+        </form>
+    </div>
 
-    {{ include('equipe/_delete_form.html.twig') }}
 {% endblock %}

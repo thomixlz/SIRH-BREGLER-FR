@@ -1,4 +1,24 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+
+
+    <div class="col-12 champ-form container-form">
+        <h3>Equipe parente :</h3>
+        {{ form_row(form.parent, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
+    </div>
+
+    <div class="col-12 champ-form container-form">
+        <h3>Nom de l'équipe :</h3>
+        {{ form_row(form.nom, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
+    </div>
+
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <div class="modal-submit d-flex justify-content-center">
+            <button type="submit" class="btn-crud">Enregistrer</button>
+        </div>
+    </div>
+
+
 {{ form_end(form) }}
+
+

@@ -16,8 +16,9 @@
 <div class="topbar">
         <h1 class="current"><b>SIRH - MNS</b> | <span>GESTION UTILISATEURS</span> </h1>
         <nav>
-        <a href="#" class="menu-item"><span> Nombres d'utilisateurs : {{ userCount }}</span></a>
-          <a href="{{ path('app_user_new') }}" class="menu-item"><span class="iconoir-plus-circle-solid mr-2"></span>Ajouter utilisateurs</a>
+            <input type="text" id="searchInput" name="search" placeholder="Rechercher par nom...">
+            <a href="#" class="menu-item"><span> Nombres d'utilisateurs : {{ userCount }}</span></a>
+            <a href="{{ path('app_user_new') }}" class="menu-item"><span class="iconoir-plus-circle-solid mr-2"></span>Ajouter utilisateurs</a>
         </nav>
       </div>
       <div class="wrapper">
@@ -34,58 +35,108 @@
             </tr>
         </thead>
         <tbody>
-        {% for user in users %}
-            <tr>
-                <td class="">
-                    {% if user.image %}
-                        <img class="img-tab" src="{{ asset('uploads/user/' ~ user.image) }}" alt="User Image">
-                    {% else %}
-                        <span>No image available</span>
-                    {% endif %}
-                </td>
-                <td>{{ user.nom }}</td>
-                <td>{{ user.prenom }}</td>
-                <td>
-                    {% if user.roles is defined and user.roles is not empty %}
-                        {% set userRoles = user.roles | filter(role => role != 'ROLE_USER') %}
-                        {% if userRoles is empty %}
-                            {{ roleLabels['ROLE_USER'] }}
+            {% for user in users %}
+                <tr>
+                    <td class="">
+                        {% if user.image %}
+                            <img class="img-tab" src="{{ asset('uploads/user/' ~ user.image) }}" alt="User Image">
                         {% else %}
-                            {{ userRoles | map(role => roleLabels[role] ?? role) | join(', ') }}
+                            <span>Aucune image</span>
                         {% endif %}
-                    {% else %}
-                        Aucun rôle
-                    {% endif %}
-                </td>
-                <td>
-                    {% if user.equipe is defined and user.equipe is not empty %}
-                        {% if user.equipe is empty %}
-                            Non affecté
+                    </td>
+                    <td class="user-nom">{{ user.nom }}</td> <!-- ID ajouté ici -->
+                    <td class="user-prenom">{{ user.prenom }}</td> <!-- ID ajouté ici -->
+                    <td>
+                    <strong>
+                        {% if user.roles is defined and user.roles is not empty %}
+                            {% set userRoles = user.roles | filter(role => role != 'ROLE_USER') %}
+                            {% if userRoles is empty %}
+                                {{ roleLabels['ROLE_USER'] }}
+                            {% else %}
+                                {% for role in userRoles %}
+                                    {% if role == 'ROLE_ADMIN' %}
+                                        <!-- Ajout de 2 étoiles pour le rôle admin -->
+                                        <i class="iconoir-star-solid"></i><i class="iconoir-star-solid"></i>
+                                        {{ roleLabels[role] ?? role }}
+                                    {% elseif role == 'ROLE_DIRECTEURRH' %}
+                                        <!-- Ajout d'une seule étoile pour le rôle directeur RH -->
+                                        <i class="iconoir-star-solid"></i>
+                                        {{ roleLabels[role] ?? role }}
+                                    {% elseif role == 'ROLE_RESPONSABLE_HIERA' %}
+                                        <!-- Ajout d'une étoile non solide pour le rôle responsable Hiera -->
+                                        <i class="iconoir-star"></i>
+                                        {{ roleLabels[role] ?? role }}
+                                    {% elseif role == 'ROLE_RTT' %}
+                                        <!-- Ajout de l'icône sun-light pour le rôle RTT -->
+                                        <i class="iconoir-sun-light"></i>
+                                        {{ roleLabels[role] ?? role }}
+                                    {% elseif role == 'ROLE_REFERENT_FRAIS' %}
+                                        <!-- Ajout de l'icône cycling pour le rôle référent frais -->
+                                        <i class="iconoir-cycling"></i>
+                                        {{ roleLabels[role] ?? role }}
+                                    {% else %}
+                                        {{ roleLabels[role] ?? role }}
+                                    {% endif %}
+                                    {% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            {% endif %}
                         {% else %}
-                            {{ user.equipe.nom }}
+                            Aucun rôle
                         {% endif %}
-                    {% else %}
-                        Aucune équipe
-                    {% endif %}
+                    </strong>
                 </td>
-              <td class="d-flex justify-content-center align-items-center">
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn-edit btn btn-sm btn-danger mr-2"{% if user.id == 1 %} style="visibility:hidden;"{% endif %}>
-                        <span class="iconoir-design-pencil iconoir-btn-ed mr-1"></span> Edit
-                    </a>
-                    <form method="post" action="{{ path('app_user_delete', {'id': user.id}) }}" class="m-0">
-                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-                        <button type="submit" class="btn-delete btn btn-sm btn-danger d-flex" onclick="return confirm('Êtes-vous sûr de vouloir supprimer l\'utilisateur ?');" {% if user.id == 1 %} style="visibility:hidden;"{% endif %}>
-                            <span class="iconoir-trash-solid iconoir-btn-ed mr-1"></span> Supprimer
-                        </button>
-                    </form>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
+
+
+                    <td>
+                        {% if user.equipe is defined and user.equipe is not empty %}
+                            {% if user.equipe is empty %}
+                                Non affecté
+                            {% else %}
+                                {{ user.equipe.nom }}
+                            {% endif %}
+                        {% else %}
+                            Aucune équipe
+                        {% endif %}
+                    </td>
+                    <td class="d-flex justify-content-center align-items-center">
+                        <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn-edit btn btn-sm btn-danger mr-2"{% if user.id == 1 %} style="visibility:hidden;"{% endif %}>
+                            <span class="iconoir-design-pencil iconoir-btn-ed mr-1"></span> Edit
+                        </a>
+                        <form method="post" action="{{ path('app_user_delete', {'id': user.id}) }}" class="m-0">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                            <button type="submit" class="btn-delete btn btn-sm btn-danger d-flex" onclick="return confirm('Êtes-vous sûr de vouloir supprimer l\'utilisateur ?');" {% if user.id == 1 %} style="visibility:hidden;"{% endif %}>
+                                <span class="iconoir-trash-solid iconoir-btn-ed mr-1"></span> Supprimer
+                            </button>
+                        </form>
+                        {% if user.id != 1 %}<a class="ml-2" href="{{ path('app_user_show', {'id': user.id}) }}"><i class="fa-solid fa-eye"></i></a>{% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">no records found</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 
+    
+<script>
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        let filter = this.value.toLowerCase();
+        let rows = document.querySelectorAll('.table-admin tbody tr');
+        
+        rows.forEach(function(row) {
+            let nom = row.querySelector('.user-nom').textContent.toLowerCase();
+            let prenom = row.querySelector('.user-prenom').textContent.toLowerCase();
+            
+            if (nom.includes(filter) || prenom.includes(filter)) {
+                row.style.display = ''; // Affiche la ligne si le nom ou prénom correspond
+            } else {
+                row.style.display = 'none'; // Cache la ligne sinon
+            }
+        });
+    });
+</script>
+
 {% endblock %}
+

@@ -3,33 +3,45 @@
 {% block title %}TypesAbsences index{% endblock %}
 
 {% block body %}
-    <h1>TypesAbsences index</h1>
 
-    <table class="table">
+<div class="topbar">
+        <h1 class="current"><b>SIRH - MNS</b> | <span>GESTION TYPES ABSENCES</span> </h1>
+        <nav>
+            <a href="{{ path('app_types_absences_new') }}" class="menu-item"><span class="iconoir-plus-circle-solid mr-2"></span>Ajouter types d'absence</a>
+        </nav>
+      </div>
+      <div class="wrapper">
+      
+    <table class="table table-admin">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Libelle</th>
-                <th>actions</th>
+                <th class="text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for types_absence in types_absences %}
             <tr>
-                <td>{{ types_absence.id }}</td>
                 <td>{{ types_absence.libelle }}</td>
-                <td>
-                    <a href="{{ path('app_types_absences_show', {'id': types_absence.id}) }}">show</a>
-                    <a href="{{ path('app_types_absences_edit', {'id': types_absence.id}) }}">edit</a>
+
+                <td class="d-flex justify-content-center align-items-center">
+
+                    <a href="{{ path('app_types_absences_edit', {'id': types_absence.id}) }}" class="btn-edit btn btn-sm btn-danger mr-2">
+                        <span class="iconoir-design-pencil iconoir-btn-ed mr-1"></span> Edit
+                    </a>
+                    <form method="post" action="{{ path('app_types_absences_delete', {'id': types_absence.id}) }}" class="m-0">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ types_absence.id) }}">
+                        <button type="submit" class="btn-delete btn btn-sm btn-danger d-flex" onclick="return confirm('Êtes-vous sûr de vouloir supprimer le type absence ?');">
+                            <span class="iconoir-trash-solid iconoir-btn-ed mr-1"></span> Supprimer
+                        </button>
+                    </form>
                 </td>
             </tr>
-        {% else %}
+         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="8">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_types_absences_new') }}">Create new</a>
 {% endblock %}

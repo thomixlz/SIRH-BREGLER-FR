@@ -35,6 +35,16 @@ class DeplacementType extends AbstractType
             'attr' => ['id' => 'adresse-arrive-cache'],
             'required' => false,
         ])
+
+        ->add('raison',TextType::class, [
+            'attr' => [
+                'class' => 'attached-input',
+                'placeholder' => 'Introduction'
+            ],
+            'label' => false,
+            'required' => false
+        ])
+
             ->add('distance')
             ->add('cout')
             ->add('etat', ChoiceType::class, [

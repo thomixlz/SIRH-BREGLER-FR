@@ -50,6 +50,16 @@ BREGLER Thomas (@thomixlz)
 
 ## Version History
 
+* 0.11 : 
+    * Add all style update
+    * Add dashboard data
+    * Add Infos crud
+    * Add Contact crud
+
+* 0.11 : 
+    * Style update in crud, form and tab
+    * Add Ckeditor in form 
+
 * 0.10 : 
     * Add Event and Calendar system
     * Add and Use Full Calendar with js

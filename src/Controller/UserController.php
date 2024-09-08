@@ -62,31 +62,31 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             
-            // Génération du mot de passe aléatoire
+            if($file != 'ok') {
+                $path = '/';
+                $fileName = str_replace(' ','_',$file->getClientOriginalName());
+
+                $file->move(
+                    $this->getParameter('user_directory').$path,
+                    $fileName
+                );
+                $user->setUser($fileName);
+            }
+
             $password = $this->generateRandomPassword();
-            // Encodez le mot de passe si vous utilisez un encodeur de mot de passe
+            
             $encodedPassword = password_hash($password, PASSWORD_BCRYPT); // Utilisez PASSWORD_BCRYPT ou une autre méthode selon votre configuration
             $user->setPassword($encodedPassword);
 
-            // Ensure the user has at least ROLE_USER
             $roles = $user->getRoles();
             if (empty($roles)) {
                 $user->setRoles(['ROLE_USER']);
             }
 
-            // Gestion du fichier image
-            $file = $form->get('image')->getData();
-            if ($file) {
-                $fileName = md5(uniqid()) . '-' . str_replace(' ', '_', $file->getClientOriginalName()) . '.' . $file->guessExtension();
-                $file->move($this->getParameter('user_directory'), $fileName);
-                $user->setImage($fileName);
-            }
-
-            // Enregistrer l'utilisateur en base de données
+           
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // Envoyer l'email avec le mot de passe
             $this->sendPasswordEmail($user->getEmail(), $password);
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
@@ -111,84 +111,78 @@ class UserController extends AbstractController
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        // Conserver l'image actuelle pour la réutiliser si aucune nouvelle image n'est téléchargée
-        $currentImage = $user->getImage();
-
+        $oldImage = $user->getImage();  
+    
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
-            // Vérifier si une nouvelle image a été téléchargée
             $file = $form->get('image')->getData();
-
-            if ($file) {
-                // Supprimer l'ancienne image si elle existe
-                if ($currentImage) {
-                    $oldImagePath = $this->getParameter('user_directory') . '/' . $currentImage;
+    
+            if ($file && $file != 'ok') {
+                if ($oldImage && $oldImage != 'ok') {
+                    $oldImagePath = $this->getParameter('user_directory') . '/' . $oldImage;
                     if (file_exists($oldImagePath)) {
                         unlink($oldImagePath);
                     }
                 }
 
-                // Sauvegarder la nouvelle image
-                $fileName = md5(uniqid()) . '-' . str_replace(' ', '_', $file->getClientOriginalName()) . '.' . $file->guessExtension();
-                $file->move($this->getParameter('user_directory'), $fileName);
+                $fileName = str_replace(' ', '_', $file->getClientOriginalName());
+                $file->move(
+                    $this->getParameter('user_directory'),
+                    $fileName
+                );
                 $user->setImage($fileName);
             } else {
-                // Conserver l'ancienne image si aucune nouvelle image n'est téléchargée
-                $user->setImage($currentImage);
+                $user->setImage($oldImage);
             }
 
-            // Ne pas écraser le mot de passe si aucune nouvelle valeur n'est fournie
-            if (empty($user->getPassword())) {
-                $user->setPassword($user->getPassword());
-            } else {
-                // Encoder le nouveau mot de passe si fourni
-                // Assurez-vous d'utiliser l'encodeur de mot de passe approprié ici
-            }
 
-            // Gérer les rôles
-            $roles = $form->get('roles')->getData(); // Récupérer les rôles depuis le formulaire
-
-            // Assurer que ROLE_USER est inclus uniquement si aucun autre rôle n'est sélectionné
-            if (empty($roles)) {
-                $roles = ['ROLE_USER'];
-            } else {
-                // Si d'autres rôles sont sélectionnés, retirer ROLE_USER s'il est présent
-                if (in_array('ROLE_USER', $roles)) {
-                    $roles = array_filter($roles, function ($role) {
-                        return $role !== 'ROLE_USER';
-                    });
+            $submittedRoles = $form->get('roles')->getData(); 
+    
+            $specificRoles = [
+                'ROLE_ADMIN',
+                'ROLE_DIRECTEURRH',
+                'ROLE_RESPONSABLE_HIERA',
+                'ROLE_REFERENT_FRAIS',
+                'ROLE_RTT'
+            ];
+    
+            $hasSpecificRole = false;
+            foreach ($submittedRoles as $role) {
+                if (in_array($role, $specificRoles)) {
+                    $hasSpecificRole = true;
+                    break;
                 }
             }
-
-            $user->setRoles($roles);
-
-            // Enregistrer les modifications
+    
+            if (!$hasSpecificRole) {
+                $submittedRoles[] = 'ROLE_USER';
+            }
+    
+            $user->setRoles(array_values(array_unique($submittedRoles)));
             $entityManager->flush();
-
-            // Redirection après succès
+    
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
-
+    
         // Afficher le formulaire
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(), // Assurez-vous d'utiliser createView()
         ]);
     }
+    
 
 
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
-            $image = $user->getImage();
-            if ($image) {
-                $imagePath = $this->getParameter('user_directory') . '/' . $image;
-                if (file_exists($imagePath)) {
-                    unlink($imagePath);
-                }
+            if($user->getImage() and $user->getImage() != "ok")
+            {
+                $lien = '../public/uploads/user/'.$user->getImage();
+                unlink($lien);
             }
 
             $entityManager->remove($user);

@@ -3,9 +3,19 @@
 {% block title %}New User{% endblock %}
 
 {% block body %}
-    <h1>Create new User</h1>
-
+    <div class="topbar">
+        <h1 class="current"><b>SIRH - MNS</b> | <span>AJOUTER UTILISATEUR</span> </h1>
+        <nav>
+            <a class="menu-item" href="{{ path('app_user_index') }}"><span class="iconoir-arrow-email-forward mr-2"></span>Retour à la liste des utilisateurs</a>
+        </nav>
+    </div>
+    <div class="wrapper">
     {{ include('user/_form.html.twig') }}
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+     <style>
+    .wrapper{
+        width: 145%;
+    }
+    </style>
+
 {% endblock %}

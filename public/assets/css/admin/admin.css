@@ -1,3 +1,6 @@
+
+
+
 .table-admin{
     width: 150%;
 }
@@ -17,7 +20,6 @@
     vertical-align: bottom;
     border-bottom: 6px solid rgba(255, 255, 255, 0.129)!important;
     border-radius: 50%;
-
 }
 
 
@@ -85,7 +87,7 @@
     color: white;
     border: 0;
     border-radius: var(--max-radius);
-    background-color: #3977996f;
+    background-color: #0000006f;
     -webkit-transition: all 0.2s ease;
     -o-transition: all 0.2s ease;
     transition: all 0.2s ease;
@@ -93,7 +95,7 @@
 }
 
 .btn-crud:hover{
-    background-color: #397799bd;
+    background-color: #04f74d96;
 }
 
 .iconoir-btn-ed{
@@ -144,18 +146,27 @@
     border-radius: var(--max-radius)!important;
     background: var(--c-dark);
     color: white;
-
 }
 
+.champ-form select{
+    margin-bottom: 10px;
+    border-radius: var(--max-radius)!important;
+    background: var(--c-dark);
+    color: white;
+}
+
+
 .table-admin tbody .status {
-    border: none;
     padding: 10px;
     font-size: 14px;
 }
 
+
+
 .table-admin tbody td.status .active {
     background: #cff6dd;
     color: #1fa750;
+    
 }
 
 .table-admin tbody td.status .attente  {
@@ -192,5 +203,104 @@
 .table-admin tbody td.status .desactive:after {
     background: #c82020;
 }
+
+#searchInput {
+    height: 35px!important;
+    position: relative!important;
+    width: 250px!important;
+    background-color: var(--c-bg-elements)!important;
+    border-radius: 10px!important;
+    border: 0!important;
+    box-sizing: border-box!important;
+    color: #eee !important;
+    font-size: 11px!important;
+    outline: 0 !important;
+    padding: 4px 4px 0;
+    padding-bottom: 3px;
+}
+
+#searchInput::placeholder {
+    color: #eee !important;
+}
+
+
+.custom-checkbox-group {
+    display: flex;
+  
+}
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.custom-checkbox-input {
+    width: 20px;
+    height: 20px;
+    margin-right: 4px;
+    cursor: pointer;
+}
+
+
+.custom-checkbox-label {
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.cke_notifications_area{
+    display:none;
+}
+
+.fa-eye{
+    color:#01ebeb;
+    transition: 0.2s all;
+
+}
+
+.fa-eye:hover{
+    color:rgb(202, 202, 202);
+}
+
+.img-profil-tab{
+    border-radius: 50% 50%;
+    width: 30px;
+    height: 33px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+
+.img-container {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Ajuste selon l'endroit où tu veux que la bulle apparaisse */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.img-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+
+
+
 
 

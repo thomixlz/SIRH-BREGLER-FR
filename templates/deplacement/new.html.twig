@@ -3,9 +3,20 @@
 {% block title %}New Deplacement{% endblock %}
 
 {% block body %}
-    <h1>Create new Deplacement</h1>
+    <style>
+    .wrapper{
+        width: 145%;
+    }
+    </style>
+
+    <div class="topbar">
+        <h1 class="current"><b>SIRH - MNS</b> | <span>AJOUTER FRAIS DE DÉPLACEMENT</span> </h1>
+        <nav>
+            <a class="menu-item" href="{{ path('app_deplacement_index') }}"><span class="iconoir-arrow-email-forward mr-2"></span>Retour à la liste des frais de déplacement</a>
+        </nav>
+    </div>
+    <div class="wrapper">
 
     {{ include('deplacement/_form.html.twig') }}
 
-    <a href="{{ path('app_deplacement_index') }}">back to list</a>
 {% endblock %}

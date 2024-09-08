@@ -3,9 +3,25 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
 
-    <table class="table">
+{% set roleLabels = {
+    'ROLE_ADMIN': 'Administrateur',
+    'ROLE_DIRECTEURRH': 'Directeur RH',
+    'ROLE_RESPONSABLE_HIERA': 'Responsable Hiérarchique',
+    'ROLE_REFERENT_FRAIS': 'Référent Frais de Déplacement',
+    'ROLE_RTT': 'Responsable RTT',
+    'ROLE_USER': 'Utilisateur'
+} %}
+
+     <div class="topbar">
+        <h1 class="current"><b>SIRH - MNS</b> | <span>{{user.nom}} {{user.prenom}}</span> </h1>
+        <nav>
+            <a class="menu-item" href="{{ path('app_equipe_index') }}"><span class="iconoir-arrow-email-forward mr-2"></span>Retour à la liste des equipes</a>
+        </nav>
+      </div>
+      <div class="wrapper">
+      
+        <table class="table table-admin ">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -17,15 +33,59 @@
             </tr>
             <tr>
                 <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                  <td>
+                    <strong>
+                        {% if user.roles is defined and user.roles is not empty %}
+                            {% set userRoles = user.roles | filter(role => role != 'ROLE_USER') %}
+                            {% if userRoles is empty %}
+                                {{ roleLabels['ROLE_USER'] }}
+                            {% else %}
+                                {% for role in userRoles %}
+                                    {% if role == 'ROLE_ADMIN' %}
+                                        <!-- Ajout de 2 étoiles pour le rôle admin -->
+                                        <i class="iconoir-star-solid"></i><i class="iconoir-star-solid"></i>
+                                        {{ roleLabels[role] ?? role }}
+                                    {% elseif role == 'ROLE_DIRECTEURRH' %}
+                                        <!-- Ajout d'une seule étoile pour le rôle directeur RH -->
+                                        <i class="iconoir-star-solid"></i>
+                                        {{ roleLabels[role] ?? role }}
+                                    {% elseif role == 'ROLE_RESPONSABLE_HIERA' %}
+                                        <!-- Ajout d'une étoile non solide pour le rôle responsable Hiera -->
+                                        <i class="iconoir-star"></i>
+                                        {{ roleLabels[role] ?? role }}
+                                    {% elseif role == 'ROLE_RTT' %}
+                                        <!-- Ajout de l'icône sun-light pour le rôle RTT -->
+                                        <i class="iconoir-sun-light"></i>
+                                        {{ roleLabels[role] ?? role }}
+                                    {% elseif role == 'ROLE_REFERENT_FRAIS' %}
+                                        <!-- Ajout de l'icône cycling pour le rôle référent frais -->
+                                        <i class="iconoir-cycling"></i>
+                                        {{ roleLabels[role] ?? role }}
+                                    {% else %}
+                                        {{ roleLabels[role] ?? role }}
+                                    {% endif %}
+                                    {% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% else %}
+                            Aucun rôle
+                        {% endif %}
+                    </strong>
+                </td>
             </tr>
             <tr>
                 <th>Password</th>
-                <td>{{ user.password }}</td>
+                <td>****************</td>
             </tr>
             <tr>
                 <th>Image</th>
-                <td>{{ user.image }}</td>
+                <td> 
+                    {% if user.image != "ok" %}
+                        <img class="img-profil-tab" src="{{ asset('uploads/user/' ~ user.image) }}">
+                    {% else %}
+                        Aucune image
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <th>Nom</th>
@@ -37,14 +97,15 @@
             </tr>
             <tr>
                 <th>DateNaissance</th>
-                <td>{{ user.dateNaissance ? user.dateNaissance|date('Y-m-d') : '' }}</td>
+                <td>{{ user.dateNaissance ? user.dateNaissance|date('d/m/Y H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+     <div class="d-flex">
+        <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn-edit btn btn-sm btn-danger mr-2">
+            <span class="iconoir-design-pencil iconoir-btn-ed mr-1"></span> Edit
+        </a>
+    </div>
 
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
-
-    {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

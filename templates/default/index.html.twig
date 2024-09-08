@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DefaultController!{% endblock %}
+
+{% block body %}
+
+<style>
+.wrapper{
+  width:145%;
+}
+</style>
+
+<div class="topbar">
+        <h1 class="current"><b>SIRH - MNS</b> | <span>DASHBOARD</span> </h1>
+        <nav>
+          <a href="{{ path('app_info_index') }}" class="menu-item"><span class="mr-2 iconoir-info-circle-solid"></span>Gestion informations</a>
+        </nav>
+      </div>
+      <div class="wrapper">
+
+  <div class="d-flex">
+  
+    <div class="col-6">
+          <div class="rectangle-home">
+            <h3>Collaborateur présent</h3>
+            <h3>Collaborateur absent</h3>
+          </div>
+    </div>
+
+    <div class="col-6">
+          <div class="rectangle-home">
+            <h3>Informations du jour</h3>
+            {% for res in info %}
+              {% if res.affichage == "Oui" %}
+              <div class="d-flex justify-content-between">
+                <h5 class="mb-0">{{res.titre}}</h5>
+                <h6 class="mb-0">{{res.date|date('d/m/Y')}}</h5>
+              </div>
+              <p class="mb-0">{{res.message|raw}}</p>
+              {% endif %}
+            {% endfor %}
+          </div>
+    </div>
+  </div>
+
+  <div class="d-flex">
+    <div class="col-4">
+        <div class="rectangle-home">
+          <h3>Absences</h3>
+          <p>Non consultés :</p>
+          <p>En attente :</p>
+          <p>Finalisé :</p>
+        </div>
+      </div>
+       <div class="col-4">
+        <div class="rectangle-home">
+          <h3>Frais déplacement</h3>
+          <p>Non consultés :</p>
+          <p>En attente :</p>
+          <p>Finalisé :</p>
+        </div>
+      </div>
+       <div class="col-4">
+        <div class="rectangle-home">
+          <h3>Contact</h3>
+          <p>Messages non consultés :</p>
+          <p>Messages en attente :</p>
+          <p>Message finalisé :</p>
+        </div>
+      </div>
+  </div>
+
+  <div class="d-flex">
+  
+    <div class="col-12">
+       <div class="rectangle-home mb-0">
+          <h3>Outils</h3>
+          
+        </div>
+    </div>
+  </div>
+
+ 
+    
+{% endblock %}

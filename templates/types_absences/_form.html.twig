@@ -1,4 +1,15 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+      <div class="col-12 champ-form container-form mb-5">
+        <h3>Type :</h3>
+        {{ form_row(form.libelle, { 'attr': { 'class': 'form-control', 'placeholder': 'Libelle' } }) }}
+    </div>
+
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <div class="modal-submit d-flex justify-content-center">
+            <button type="submit" class="btn-crud">Enregistrer</button>
+        </div>
+    </div>
+
+
+
 {{ form_end(form) }}

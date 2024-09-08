@@ -10,6 +10,8 @@ use Symfony\Component\Security\Core\Security;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
 use App\Entity\User;
+use App\Repository\InfoRepository;
+use App\Entity\Info;
 use App\Repository\EquipeRepository;
 use App\Entity\Equipe;
 
@@ -21,14 +23,17 @@ use App\Entity\Equipe;
 class DefaultController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(Security $security): Response
+    public function index(Security $security, InfoRepository $infoRepo): Response
     {
+
+        $info = $infoRepo->findAll();
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
+            'info' => $info,
         ]);
     }
 

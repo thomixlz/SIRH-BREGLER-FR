@@ -82,8 +82,12 @@ final class AbsencesController extends AbstractController
     #[Route('/{id}', name: 'app_absences_show', methods: ['GET'])]
     public function show(Absences $absence): Response
     {
+        $user = $absence->getUser();
+
         return $this->render('absences/show.html.twig', [
             'absence' => $absence,
+            'user' => $user,
+
         ]);
     }
 
@@ -91,6 +95,7 @@ final class AbsencesController extends AbstractController
     public function edit(Request $request, Absences $absence, EntityManagerInterface $entityManager): Response
     {
 
+        $user = $absence->getUser();
         $oldDocument = $absence->getDocument();
 
         $form = $this->createForm(AbsencesType::class, $absence);
@@ -129,6 +134,7 @@ final class AbsencesController extends AbstractController
 
         return $this->render('absences/edit.html.twig', [
             'absence' => $absence,
+            'user' => $user,
             'form' => $form->createView(),
         ]);
     }

@@ -42,16 +42,12 @@ class UserType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'label' => false,
-                'data' => ['ROLE_USER'],
+                'data' => $options['data']->getRoles(), // Pré-remplissage avec les rôles actuels de l'utilisateur
                 'required' => true
             ])
 
-            ->add('image', FileType::class, [
-                'data_class' => null,
-                'required' => false,
-                'label' => false,
-                'empty_data' => null
-            ])
+            ->add('image', FileType::class, array('data_class' => null, 'required' => false, 'label' => false, 'empty_data' => 'ok'))
+
             ->add('nom', TextType::class, [
                 'attr' => ['class' => 'attached-input'],
                 'label' => false,
@@ -72,7 +68,10 @@ class UserType extends AbstractType
             ])
             ->add('equipe', EntityType::class, [
                 'class' => Equipe::class,
-                'choice_label' => 'nom'
+                'label' => false,
+                'attr' => ['class' => 'attached-input'],
+                'placeholder' => 'Aucune équipe',
+                'required' => false,
             ])
         ;
     }

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Info{% endblock %}
+
+{% block body %}
+     <style>
+    .wrapper{
+        width: 145%;
+    }
+    </style>
+
+    <div class="topbar">
+        <h1 class="current"><b>SIRH - MNS</b> | <span>CRÉER UNE INFORMATION</span> </h1>
+        <nav>
+            <a class="menu-item" href="{{ path('app_info_index') }}"><span class="iconoir-arrow-email-forward mr-2"></span>Retour à la liste des équipes</a>
+        </nav>
+    </div>
+    <div class="wrapper">
+
+
+    {{ include('info/_form.html.twig') }}
+
+{% endblock %}

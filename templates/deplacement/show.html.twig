@@ -3,13 +3,23 @@
 {% block title %}Deplacement{% endblock %}
 
 {% block body %}
-    <h1>Deplacement</h1>
-
-    <table class="table">
+     <div class="topbar">
+        <h1 class="current"><b>SIRH - MNS</b> | <span>FRAIS DE DEPLACEMENT {{user.nom}} {{user.prenom}}</span> </h1>
+        <nav>
+            <a class="menu-item" href="{{ path('app_deplacement_index') }}"><span class="iconoir-arrow-email-forward mr-2"></span>Retour à la liste des deplacements</a>
+        </nav>
+      </div>
+      <div class="wrapper">
+      
+    <table class="table table-admin ">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>Référence</th>
                 <td>{{ deplacement.id }}</td>
+            </tr>
+            <tr>
+                <th>Raison</th>
+                <td>{{ deplacement.raison }}</td>
             </tr>
             <tr>
                 <th>AdresseDepart</th>
@@ -21,22 +31,39 @@
             </tr>
             <tr>
                 <th>Distance</th>
-                <td>{{ deplacement.distance }}</td>
+                <td>{{ deplacement.distance }} km</td>
             </tr>
             <tr>
                 <th>Cout</th>
-                <td>{{ deplacement.cout }}</td>
+                <td>{{ deplacement.cout }} €</td>
             </tr>
             <tr>
                 <th>Etat</th>
-                <td>{{ deplacement.etat }}</td>
+                <td class="status">
+                    {% if deplacement.etat == "Non" %}
+                        <span class="desactive">Non</span>
+                    {% elseif deplacement.etat == "Attente" %}
+                        <span class="attente">En attente</span>
+                    {% else %}   
+                        <span class="active">Oui</span>
+                    {% endif %}  
+                
+                </td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_deplacement_index') }}">back to list</a>
+    <div class="d-flex">
+        <a href="{{ path('app_deplacement_edit', {'id': deplacement.id}) }}" class="btn-edit btn btn-sm btn-danger mr-2">
+            <span class="iconoir-design-pencil iconoir-btn-ed mr-1"></span> Edit
+        </a>
 
-    <a href="{{ path('app_deplacement_edit', {'id': deplacement.id}) }}">edit</a>
+        <form method="post" action="{{ path('app_deplacement_delete', {'id': deplacement.id}) }}" class="m-0">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ deplacement.id) }}">
+            <button type="submit" class="btn-delete btn btn-sm btn-danger d-flex" onclick="return confirm('Êtes-vous sûr de vouloir supprimer l'deplacement ?');">
+                <span class="iconoir-trash-solid iconoir-btn-ed mr-1"></span> Supprimer
+            </button>
+        </form>
+    </div>
 
-    {{ include('deplacement/_delete_form.html.twig') }}
 {% endblock %}

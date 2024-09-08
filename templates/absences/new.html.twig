@@ -3,9 +3,20 @@
 {% block title %}New Absences{% endblock %}
 
 {% block body %}
-    <h1>Create new Absences</h1>
+    <style>
+    .wrapper{
+        width: 145%;
+    }
+    </style>
+
+    <div class="topbar">
+        <h1 class="current"><b>SIRH - MNS</b> | <span>AJOUTER ABSENCES</span> </h1>
+        <nav>
+            <a class="menu-item" href="{{ path('app_absences_index') }}"><span class="iconoir-arrow-email-forward mr-2"></span>Retour à la liste des absences</a>
+        </nav>
+    </div>
+    <div class="wrapper">
 
     {{ include('absences/_form.html.twig') }}
 
-    <a href="{{ path('app_absences_index') }}">back to list</a>
 {% endblock %}

@@ -8,9 +8,6 @@
     src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&libraries=places&callback=initAutocomplete">
 </script>
 
-<!-- Champs visibles pour les adresses -->
-<input type="text" id="adresse-depart" name="adresseDepartVisible" value="{{ deplacement.adresseDepart }}" class="form-control">
-<input type="text" id="adresse-arrive" name="adresseArriveVisible" value="{{ deplacement.adresseArrive }}" class="form-control">
 
 <!-- Champs cachés pour stocker les adresses formatées -->
 <input type="hidden" id="adresse-depart-cache" name="adresseDepartCache" value="{{ deplacement.adresseDepart }}">
@@ -19,10 +16,38 @@
 <!-- Champ caché pour la distance -->
 <input type="hidden" id="distance-cache" name="distanceCache" value="{{ deplacement.distance }}">
 
+<div class="d-none">
+    {{ form_widget(form.adresseDepart, { 'attr': {'class': 'hidden'} }) }}
+    {{ form_widget(form.adresseArrive, { 'attr': {'class': 'hidden'} }) }}
+</div>
 
-{{ form_widget(form.adresseDepart, { 'attr': {'class': 'hidden'} }) }}
-{{ form_widget(form.adresseArrive, { 'attr': {'class': 'hidden'} }) }}
+    <div class="col-12 champ-form container-form">
+        <h3>Raison :</h3>
+        {{ form_row(form.raison, { 'attr': { 'class': 'form-control', 'placeholder': 'Raison' } }) }}
+    </div>
 
+
+    <div class="col-12 champ-form">
+        <h3>Adresse de départ :</h3>
+        <input type="text" id="adresse-depart" name="adresseDepartVisible" value="{{ deplacement.adresseDepart }}" class="form-control">
+     </div>
+
+    <div class="col-12 champ-form">
+        <h3>Adresse d'arrivé :</h3>
+        <input type="text" id="adresse-arrive" name="adresseArriveVisible" value="{{ deplacement.adresseArrive }}" class="form-control">
+    </div>
+
+
+     <div class="col-12 d-flex justify-content-center align-items-center">
+        <div class="modal-submit d-flex justify-content-center">
+            <button type="submit" class="btn-crud">Enregistrer</button>
+        </div>
+    </div>
+
+
+
+
+<div class="d-none">
 
 <div>
     {{ form_label(form.distance) }}
@@ -44,7 +69,9 @@
     {{ form_widget(form.user, { 'attr': {'class': 'form-control'} }) }}
 </div>
 
-<button class="btn">{{ button_label|default('Save') }}</button>
+</div>
+
+
 
 <script>
 

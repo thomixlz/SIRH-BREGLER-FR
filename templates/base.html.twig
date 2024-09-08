@@ -50,7 +50,8 @@
  <main class="container">
       <div class="menu">
         <div class="avatar">
-          <img class="thumb" src="{{ asset('assets/img/navbar/userpicture.png') }}" width="60"/>
+                    <img class="thumb" src="{{ asset(app.user.image ? 'uploads/user/' ~ app.user.image : 'assets/img/navbar/userpicture.png') }}" />
+
           <span class="name">
                 <b>{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %} {{ app.user.getEmail() }} {% endif %}</b>
             <br>
@@ -72,41 +73,41 @@
           </span>
         </div>
         <nav class="primary">
-            <a href="{{ path('app_home') }}" class="menu-item active">
+            <a href="{{ path('app_home') }}" class="menu-item {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}">
                 <span class="iconoir-report-columns"></span>
                 <span class="desc">Dashboard</span>
             </a>
-            <a href="{{ path('app_absences_index') }}" class="menu-item">
+            <a href="{{ path('app_absences_index') }}" class="menu-item {% if app.request.attributes.get('_route') == 'app_absences_index' %}active{% endif %}">
                 <span class="iconoir-google-docs"></span>
                 <span class="desc">Absences</span>
-            </a>
-            <a href="{{ path('app_deplacement_index') }}" class="menu-item"> 
+            </a> 
+            <a href="{{ path('app_deplacement_index') }}" class="menu-item {% if app.request.attributes.get('_route') == 'app_deplacement_index' %}active{% endif %}">
                 <span class="iconoir-skateboarding"></span>
                 <span class="desc">Déplacements</span>
             </a>
-            <a href="{{ path('app_equipe_index') }}" class="menu-item">
+            <a href="{{ path('app_equipe_index') }}" class="menu-item {% if app.request.attributes.get('_route') == 'app_equipe_index' %}active{% endif %}">
                 <span class="iconoir-table"></span>
                 <span class="desc">Équipes</span>
             </a>
-            <a href="{{ path('app_user_index') }}" class="menu-item">
+            <a href="{{ path('app_user_index') }}" class="menu-item {% if app.request.attributes.get('_route') == 'app_user_index' %}active{% endif %}">
                 <span class="iconoir-user"></span>
                 <span class="desc">Utilisateurs</span>
+            </a>
+            <a href="{{ path('app_calendrier') }}" class="menu-item {% if app.request.attributes.get('_route') == 'app_calendrier' %}active{% endif %}">
+                <span class="iconoir-calendar"></span>
+                <span class="desc">Calendrier</span>
             </a>
 
             <a href="" class="menu-item">
                 <span class="iconoir-mail"></span>
                 <span class="desc">Contact</span>
             </a>
-
-            <a href="{{ path('app_calendrier') }}" class="menu-item">
-                <span class="iconoir-settings"></span>
-                <span class="desc">Calendrier</span>
-            </a>
             
-            <a href="#" class="menu-item">
+            <a href="{{ path('app_user_show', {id: app.user.id}) }}" class="menu-item">
                 <span class="iconoir-settings"></span>
                 <span class="desc">Paramètres</span>
             </a>
+
             <a href="{{ path('app_logout') }}" class="menu-item">
                 <span class="iconoir-log-out"></span>
                 <span class="desc"><b>Déconnexion</b></span>

@@ -27,8 +27,8 @@
             <tr>
                <td>{{ deplacement.user.nom }} {{ deplacement.user.prenom }}</td> <!-- Affiche le nom de l'utilisateur -->
 
-                <td>{{ deplacement.distance }}</td>
-                <td>{{ deplacement.cout }}</td>
+                <td>{{ deplacement.distance }} km</td>
+                <td>{{ deplacement.cout }} €</td>
                 <td class="status">
                         {% if deplacement.etat == "Non" %}
                             <span class="desactive">Non</span>
@@ -50,6 +50,9 @@
                             <span class="iconoir-trash-solid iconoir-btn-ed mr-1"></span> Supprimer
                         </button>
                     </form>
+
+                    <a class="ml-2" href="{{ path('app_deplacement_show', {'id': deplacement.id}) }}"><i class="fa-solid fa-eye"></i></a>
+
                 </td>
               
             </tr>
@@ -61,5 +64,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_deplacement_new') }}">Create new</a>
 {% endblock %}

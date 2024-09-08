@@ -75,6 +75,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Event::class, mappedBy: 'user')]
     private Collection $events;
 
+    /**
+     * @var Collection<int, Contact>
+     */
+    #[ORM\OneToMany(targetEntity: Contact::class, mappedBy: 'user')]
+    private Collection $contacts;
+
+    /**
+     * @var Collection<int, Info>
+     */
+    #[ORM\OneToMany(targetEntity: Info::class, mappedBy: 'user')]
+    private Collection $infos;
+
     public function __construct()
     {
         $this->fraisDeplacements = new ArrayCollection();
@@ -82,6 +94,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->deplacements = new ArrayCollection();
         $this->absences = new ArrayCollection();
         $this->events = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
+        $this->infos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -331,6 +345,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($event->getUser() === $this) {
                 $event->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contact>
+     */
+    public function getContacts(): Collection
+    {
+        return $this->contacts;
+    }
+
+    public function addContact(Contact $contact): static
+    {
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts->add($contact);
+            $contact->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContact(Contact $contact): static
+    {
+        if ($this->contacts->removeElement($contact)) {
+            // set the owning side to null (unless already changed)
+            if ($contact->getUser() === $this) {
+                $contact->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Info>
+     */
+    public function getInfos(): Collection
+    {
+        return $this->infos;
+    }
+
+    public function addInfo(Info $info): static
+    {
+        if (!$this->infos->contains($info)) {
+            $this->infos->add($info);
+            $info->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInfo(Info $info): static
+    {
+        if ($this->infos->removeElement($info)) {
+            // set the owning side to null (unless already changed)
+            if ($info->getUser() === $this) {
+                $info->setUser(null);
             }
         }
 

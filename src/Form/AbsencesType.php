@@ -27,13 +27,23 @@ class AbsencesType extends AbstractType
     {
         $builder
             ->add('dateDebut', null, [
+                'label' => false,
                 'widget' => 'single_text',
             ])
             ->add('dateFin', null, [
+                'label' => false,
                 'widget' => 'single_text',
             ])
-            ->add('raison')
+            ->add('raison',TextareaType::class, [
+                'attr' => [
+                    'class' => 'attached-input',
+                    'placeholder' => 'Introduction'
+                ],
+                'label' => false,
+                'required' => false
+            ])
             ->add('document', FileType::class, array('data_class' => null, 'required' => false, 'label' => false, 'empty_data' => 'ok'))
+            
             ->add('createdAt', null, [
                 'widget' => 'single_text',
             ])

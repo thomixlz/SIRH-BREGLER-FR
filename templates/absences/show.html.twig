@@ -3,47 +3,65 @@
 {% block title %}Absences{% endblock %}
 
 {% block body %}
-    <h1>Absences</h1>
+    <div class="topbar">
+        <h1 class="current"><b>SIRH - MNS</b> | <span>ÉDITER ABSENCES DE {{user.nom}} {{user.prenom}}</span> </h1>
+        <nav>
+            <a class="menu-item" href="{{ path('app_absences_index') }}"><span class="iconoir-arrow-email-forward mr-2"></span>Retour à la liste des absences</a>
+        </nav>
+      </div>
+      <div class="wrapper">
+      
+    <table class="table table-admin ">
+        <thead >
 
-    <table class="table">
-        <tbody>
+        <tbody >
             <tr>
-                <th>Id</th>
+                <th>REFERENCE :</th>
                 <td>{{ absence.id }}</td>
             </tr>
             <tr>
-                <th>DateDebut</th>
-                <td>{{ absence.dateDebut ? absence.dateDebut|date('Y-m-d') : '' }}</td>
+                <th>DateDebut :</th>
+                <td>{{ absence.dateDebut ? absence.dateDebut|date('d/m/Y') : '' }}</td>
             </tr>
             <tr>
-                <th>DateFin</th>
-                <td>{{ absence.dateFin ? absence.dateFin|date('Y-m-d') : '' }}</td>
+                <th>DateFin :</th>
+                <td>{{ absence.dateFin ? absence.dateFin|date('d/m/Y') : '' }}</td>
             </tr>
             <tr>
-                <th>Raison</th>
-                <td>{{ absence.raison }}</td>
+                <th>Raison :</th>
+                <td>{{ absence.raison|raw }}</td>
             </tr>
             <tr>
             
-                <th>Document</th>
+                <th>Document :</th>
                 <td>
-                    <a class="mr-2" style="color:white" href="{{ asset('uploads/absences/' ~ absence.document) }}" target="_blank"><i class="fa-solid fa-eye"></i></a>
+                    <a class="mr-2" style="color:white" href="{{ asset('uploads/absences/' ~ absence.document) }}" target="_blank"><i class="mr-2 fa-solid fa-eye"></i>Voir le document</a>
                 </td>
             </tr>
             <tr>
-                <th>CreatedAt</th>
-                <td>{{ absence.createdAt ? absence.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <th>CreatedAt :</th>
+                <td>{{ absence.createdAt ? absence.createdAt|date('d/m/Y H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>UpdatedAt</th>
-                <td>{{ absence.updatedAt ? absence.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <th>UpdatedAt :</th>
+                <td>{{ absence.updatedAt ? absence.updatedAt|date('d/m/Y H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_absences_index') }}">back to list</a>
+    <div class="d-flex">
+        <a href="{{ path('app_absences_edit', {'id': absence.id}) }}" class="btn-edit btn btn-sm btn-danger mr-2">
+            <span class="iconoir-design-pencil iconoir-btn-ed mr-1"></span> Edit
+        </a>
 
-    <a href="{{ path('app_absences_edit', {'id': absence.id}) }}">edit</a>
+        <form method="post" action="{{ path('app_absences_delete', {'id': absence.id}) }}" class="m-0">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ absence.id) }}">
+            <button type="submit" class="btn-delete btn btn-sm btn-danger d-flex" onclick="return confirm('Êtes-vous sûr de vouloir supprimer l'absence ?');">
+                <span class="iconoir-trash-solid iconoir-btn-ed mr-1"></span> Supprimer
+            </button>
+        </form>
+    </div>
 
-    {{ include('absences/_delete_form.html.twig') }}
-{% endblock %}
+   
+                    
+                    {% endblock %}

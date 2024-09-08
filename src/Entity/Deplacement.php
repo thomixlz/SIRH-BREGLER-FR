@@ -32,6 +32,9 @@ class Deplacement
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $etat = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $raison = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +108,18 @@ class Deplacement
     public function setEtat(?string $etat): static
     {
         $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getRaison(): ?string
+    {
+        return $this->raison;
+    }
+
+    public function setRaison(?string $raison): static
+    {
+        $this->raison = $raison;
 
         return $this;
     }

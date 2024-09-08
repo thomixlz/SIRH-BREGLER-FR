@@ -139,9 +139,12 @@
     gap: 10px;
   }
   main .menu .avatar .thumb {
+    max-width: 92px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    width: 100%;
-    max-width: 40px;
+    object-fit: cover;
+  
   }
   main .menu .avatar .name {
     color: var(--c-elements);

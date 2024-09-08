@@ -3,11 +3,20 @@
 {% block title %}Edit Equipe{% endblock %}
 
 {% block body %}
-    <h1>Edit Equipe</h1>
+     <style>
+    .wrapper{
+        width: 145%;
+    }
+    </style>
+
+    <div class="topbar">
+        <h1 class="current"><b>SIRH - MNS</b> | <span>ÉDITER ÉQUIPE : {{equipe.nom}}</span> </h1>
+        <nav>
+            <a class="menu-item" href="{{ path('app_equipe_index') }}"><span class="iconoir-arrow-email-forward mr-2"></span>Retour à la liste des équipes</a>
+        </nav>
+    </div>
+    <div class="wrapper">
 
     {{ include('equipe/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_equipe_index') }}">back to list</a>
-
-    {{ include('equipe/_delete_form.html.twig') }}
 {% endblock %}

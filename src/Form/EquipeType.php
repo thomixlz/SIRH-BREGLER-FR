@@ -24,18 +24,26 @@ class EquipeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
+
+            ->add('nom',TextType::class, [
+                'attr' => [
+                    'class' => 'attached-input',
+                    'placeholder' => 'Nom équipe'
+                ],
+                'label' => false,
+                'required' => false
+            ])
             ->add('parent', EntityType::class, [
                 'class' => Equipe::class,
                 'choice_label' => 'nom',
                 'required' => false,
-                'placeholder' => 'Choisir une équipe parente',
+                'placeholder' => '-- Choisir une équipe parente --',
                 'query_builder' => function (\Doctrine\ORM\EntityRepository $er) {
                     return $er->createQueryBuilder('e')
                         ->orderBy('e.nom', 'ASC');
                 },
                 'empty_data' => null,
-                'label' => 'Equipe parente',
+                'label' => false,
             ])
         ;
     }

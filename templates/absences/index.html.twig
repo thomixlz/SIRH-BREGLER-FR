@@ -6,7 +6,7 @@
 <div class="topbar">
         <h1 class="current"><b>SIRH - MNS</b> | <span>GESTION ABSENCES</span> </h1>
         <nav>
-            <a href="{{ path('app_types_absences_new') }}" class="menu-item"><span class="iconoir-plus-circle-solid mr-2"></span>Ajouter types d'absence</a>
+            <a href="{{ path('app_types_absences_index') }}" class="menu-item"><span class="iconoir-plus-circle-solid mr-2"></span>Gestion types d'absence</a>
             <a href="{{ path('app_absences_new') }}" class="menu-item"><span class="iconoir-plus-circle-solid mr-2"></span>Ajouter absences</a>
         </nav>
       </div>
@@ -18,7 +18,6 @@
                 <th>Fait par</th>
                 <th>Date Debut</th>
                 <th>Date Fin</th>
-                <th>Document</th>
                 <th>Etat</th>
                 <th class="text-center">Actions</th>
             </tr>
@@ -27,10 +26,9 @@
         {% for absence in absences %}
             <tr>
                 <td>{{ absence.user.nom }} {{ absence.user.prenom }}</td> <!-- Affiche le nom de l'utilisateur -->
-                <td>{{ absence.dateDebut ? absence.dateDebut|date('Y-m-d') : '' }}</td>
-                <td>{{ absence.dateFin ? absence.dateFin|date('Y-m-d') : '' }}</td>
-                <td>{{ absence.document }}</td>
-                <td class="status">
+                <td>{{ absence.dateDebut ? absence.dateDebut|date('d/m/Y') : '' }}</td>
+                <td>{{ absence.dateFin ? absence.dateFin|date('d/m/Y') : '' }}</td>
+                <td class="status pt-3">
                     {% if absence.etat == "Non" %}
                         <span class="desactive">Non</span>
                     {% elseif absence.etat == "Attente" %}
@@ -39,6 +37,7 @@
                         <span class="active">Oui</span>
                     {% endif %}  
                 </td>
+                
                 <td class="d-flex justify-content-center align-items-center">
 
                     <a href="{{ path('app_absences_edit', {'id': absence.id}) }}" class="btn-edit btn btn-sm btn-danger mr-2">
@@ -46,6 +45,7 @@
                     </a>
                     <form method="post" action="{{ path('app_absences_delete', {'id': absence.id}) }}" class="m-0">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ absence.id) }}">
+
                         <button type="submit" class="btn-delete btn btn-sm btn-danger d-flex" onclick="return confirm('Êtes-vous sûr de vouloir supprimer l'absence ?');">
                             <span class="iconoir-trash-solid iconoir-btn-ed mr-1"></span> Supprimer
                         </button>
@@ -61,6 +61,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_absences_new') }}">Create new</a>
 {% endblock %}
