@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Contact{% endblock %}
+
+{% block body %}
+    <style>
+    .wrapper{
+        width: 145%;
+    }
+    </style>
+
+    <div class="topbar">
+        <h1 class="current"><b>SIRH - MNS</b> | <span>CRÉATION D'UN MESSAGE</span> </h1>
+        <nav>
+            <a class="menu-item" href="{{ path('app_contact_index') }}"><span class="iconoir-arrow-email-forward mr-2"></span>Retour à la liste des messages</a>
+        </nav>
+    </div>
+    <div class="wrapper">
+
+    {{ include('contact/_form.html.twig') }}
+
+{% endblock %}

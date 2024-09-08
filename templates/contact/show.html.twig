@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+    <div class="topbar">
+        <h1 class="current"><b>SIRH - MNS</b> | <span>MESSAGE CONTACT DE {{user.nom}} {{user.prenom}}</span> </h1>
+        <nav>
+            <a class="menu-item" href="{{ path('app_contact_index') }}"><span class="iconoir-arrow-email-forward mr-2"></span>Retour à la liste des contact</a>
+        </nav>
+      </div>
+      <div class="wrapper">
+      
+    <table class="table table-admin ">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ contact.id }}</td>
+            </tr>
+            <tr>
+                <th>Message</th>
+                <td>{{ contact.message|raw }}</td>
+            </tr>
+            <tr>
+                <th>Reponse</th>
+                <td>{{ contact.reponse|raw }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td class="status">
+                    {% if contact.etat == "Non" %}
+                        <span class="desactive">Non</span>
+                    {% elseif contact.etat == "Attente" %}
+                        <span class="attente">En attente</span>
+                    {% else %}   
+                        <span class="active">Oui</span>
+                    {% endif %}  
+                
+                </td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ contact.date ? contact.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="d-flex">
+        <a href="{{ path('app_contact_edit', {'id': contact.id}) }}" class="btn-edit btn btn-sm btn-danger mr-2">
+            <span class="iconoir-design-pencil iconoir-btn-ed mr-1"></span> Répondre
+        </a>
+
+        <form method="post" action="{{ path('app_contact_delete', {'id': contact.id}) }}" class="m-0">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact.id) }}">
+            <button type="submit" class="btn-delete btn btn-sm btn-danger d-flex" onclick="return confirm('Êtes-vous sûr de vouloir supprimer l'contact ?');">
+                <span class="iconoir-trash-solid iconoir-btn-ed mr-1"></span> Supprimer
+            </button>
+        </form>
+    </div>
+
+{% endblock %}

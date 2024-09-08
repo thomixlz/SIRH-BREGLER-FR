@@ -46,7 +46,7 @@
                     <form method="post" action="{{ path('app_absences_delete', {'id': absence.id}) }}" class="m-0">
                         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ absence.id) }}">
 
-                        <button type="submit" class="btn-delete btn btn-sm btn-danger d-flex" onclick="return confirm('Êtes-vous sûr de vouloir supprimer l'absence ?');">
+                        <button type="submit" class="btn-delete btn btn-sm btn-danger d-flex" onclick="return confirm('Êtes-vous sûr de vouloir supprimer l`absence ?');">
                             <span class="iconoir-trash-solid iconoir-btn-ed mr-1"></span> Supprimer
                         </button>
                     </form>

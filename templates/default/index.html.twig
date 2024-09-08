@@ -18,67 +18,84 @@
       </div>
       <div class="wrapper">
 
-  <div class="d-flex">
-  
-    <div class="col-6">
-          <div class="rectangle-home">
-            <h3>Collaborateur présent</h3>
-            <h3>Collaborateur absent</h3>
+        <div class="d-flex">
+          <div class="col-12">
+                <div class="rectangle-home">
+                  <h3>Informations du jour</h3>
+                  {% for res in info %}
+                    {% if res.affichage == "Oui" %}
+                    <div class="d-flex justify-content-between">
+                      <h5 class="mb-0">{{res.titre}}</h5>
+                      <h6 class="mb-0">{{res.date|date('d/m/Y')}}</h5>
+                    </div>
+                    <p class="mb-0">{{res.message|raw}}</p>
+                    {% endif %}
+                  {% endfor %}
+                </div>
           </div>
-    </div>
+        </div>
 
-    <div class="col-6">
-          <div class="rectangle-home">
-            <h3>Informations du jour</h3>
-            {% for res in info %}
-              {% if res.affichage == "Oui" %}
-              <div class="d-flex justify-content-between">
-                <h5 class="mb-0">{{res.titre}}</h5>
-                <h6 class="mb-0">{{res.date|date('d/m/Y')}}</h5>
+        <div class="d-flex">
+          <div class="col-4">
+              <div class="rectangle-home">
+                <h3>Absences</h3>
+                <p>Non consultés : {{ absencesNon }}</p>
+                <p>En attente : {{ absencesAttente }}</p>
+                <p>Finalisé : {{ absencesOui }}</p>
               </div>
-              <p class="mb-0">{{res.message|raw}}</p>
-              {% endif %}
-            {% endfor %}
           </div>
-    </div>
-  </div>
+          <div class="col-4">
+              <div class="rectangle-home">
+                <h3>Frais déplacement</h3>
+                <p>Non consultés : {{ deplacementsNon }}</p>
+                <p>En attente : {{ deplacementsAttente }}</p>
+                <p>Finalisé : {{ deplacementsOui }}</p>
+              </div>
+          </div>
+          <div class="col-4">
+              <div class="rectangle-home">
+                <h3>Contact</h3>
+                <p>Messages non consultés : {{ contactsNon }}</p>
+                <p>Messages en attente : {{ contactsAttente }}</p>
+                <p>Message finalisé : {{ contactsOui }}</p>
+              </div>
+          </div>
+      </div>
 
-  <div class="d-flex">
-    <div class="col-4">
-        <div class="rectangle-home">
-          <h3>Absences</h3>
-          <p>Non consultés :</p>
-          <p>En attente :</p>
-          <p>Finalisé :</p>
-        </div>
-      </div>
-       <div class="col-4">
-        <div class="rectangle-home">
-          <h3>Frais déplacement</h3>
-          <p>Non consultés :</p>
-          <p>En attente :</p>
-          <p>Finalisé :</p>
-        </div>
-      </div>
-       <div class="col-4">
-        <div class="rectangle-home">
-          <h3>Contact</h3>
-          <p>Messages non consultés :</p>
-          <p>Messages en attente :</p>
-          <p>Message finalisé :</p>
-        </div>
-      </div>
-  </div>
+      <div class="d-flex">
+        <div class="col-12">
 
-  <div class="d-flex">
-  
-    <div class="col-12">
-       <div class="rectangle-home mb-0">
-          <h3>Outils</h3>
-          
+          <div class="rectangle-home mb-0">
+              <h3>Outils</h3>
+              <div class="pl-5 pr-5 d-flex align-items-center">
+
+                <div class="img-container pr-4">
+                  <a style="text-decoration:none;" href="https://www.metz-numeric-school.fr/fr" alt="metznumericscam" target="_blank">
+                        <span style="font-size:56px;text-decoration:none;color:white" class="iconoir-safari"></span>
+                        <span class="tooltip-text">Site Metz Numeric School</span>
+                  </a>
+                </div>  
+
+                <div class="img-container  pr-4">
+                  <a style="text-decoration:none;" href="https://ifa.sc-form.net/GaliaEDC/(S(rebnrr5hjuwwj4g1mzyivpnr))/Account/login.aspx" alt="referencement scrandom" target="_blank">
+                        <span style="font-size:56px;text-decoration:none;color:white" class="iconoir-notes"></span>
+                        <span class="tooltip-text">Scform</span>
+                    
+                  </a>
+                </div>  
+
+                <div class="img-container  pr-4">
+                  <a style="text-decoration:none;" href="https://www.google.com" alt="gooogle autorisé pas chatgpt" target="_blank">
+                        <span style="font-size:56px;text-decoration:none;color:white" class="iconoir-google-drive"></span>
+                        <span class="tooltip-text">Google</span>
+                
+                  </a>
+                </div>  
+             
+          </div>
+
         </div>
-    </div>
-  </div>
+      </div>
 
  
     

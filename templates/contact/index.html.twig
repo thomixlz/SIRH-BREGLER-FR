@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact index{% endblock %}
+
+{% block body %}
+<div class="topbar">
+        <h1 class="current"><b>SIRH - MNS</b> | <span>GESTION DES MESSAGES</span></h1>
+        <nav>
+            <a href="{{ path('app_contact_new') }}" class="menu-item"><span class="iconoir-plus-circle-solid mr-2"></span>Ajouter message</a>
+        </nav>
+      </div>
+      <div class="wrapper">
+      
+    <table class="table table-admin">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Fait par</th>
+                <th>Etat</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contact in contacts %}
+            <tr>
+                <td>{{ contact.date ? contact.date|date('d/m/Y H:i:s') : '' }}</td>
+                <td>{{ contact.user.nom }} {{ contact.user.prenom }}</td>
+                <td class="status pt-3">
+                    {% if contact.etat == "Non" %}
+                        <span class="desactive">Non</span>
+                    {% elseif contact.etat == "Attente" %}
+                        <span class="attente">En attente</span>
+                    {% else %}   
+                        <span class="active">Oui</span>
+                    {% endif %}  
+                </td>
+               <td class="d-flex justify-content-center align-items-center">
+                    <a href="{{ path('app_contact_edit', {'id': contact.id}) }}" class="btn-edit btn btn-sm btn-danger mr-2">
+                        <span class="iconoir-design-pencil iconoir-btn-ed mr-1"></span> Edit
+                    </a>
+                    <form method="post" action="{{ path('app_contact_delete', {'id': contact.id}) }}" class="m-0">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact.id) }}">
+
+                        <button type="submit" class="btn-delete btn btn-sm btn-danger d-flex" onclick="return confirm('Êtes-vous sûr de vouloir supprimer le contact ?');">
+                            <span class="iconoir-trash-solid iconoir-btn-ed mr-1"></span> Supprimer
+                        </button>
+                    </form>
+                    <a class="ml-2" href="{{ path('app_contact_show', {'id': contact.id}) }}"><i class="fa-solid fa-eye"></i></a>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

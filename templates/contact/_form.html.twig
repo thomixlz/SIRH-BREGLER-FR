@@ -1,0 +1,47 @@
+{{ form_start(form) }}
+   
+{#  #}
+
+    <div class="col-12 champ-form container-form">
+        <h3>Date :</h3>
+        {{ form_row(form.date, { 'attr': { 'class': 'form-control', 'placeholder': 'Date de naissance' } }) }}
+    </div>
+
+    <div class="col-12 champ-form container-form mb-3">
+        <h3>Message :</h3>
+        {{ form_row(form.message, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
+    </div>
+
+
+    <div class="d-none">
+        
+        {{ form_row(form.etat, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
+    </div>
+
+    
+    <div class="d-none">
+        <h3>Réponse:</h3>
+        {{ form_row(form.reponse, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
+    </div>
+
+    <div class="d-none">
+        <h3>Réponse:</h3>
+        {{ form_row(form.user, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
+    </div>
+
+
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <div class="modal-submit d-flex justify-content-center">
+            <button type="submit" class="btn-crud">Enregistrer</button>
+        </div>
+    </div>
+     <!-- Ckediotr -->
+    <script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
+
+    <script>
+    CKEDITOR.replace('contact_message', {customConfig: '{{ asset("ckeditor_config.js") }}'});
+    CKEDITOR.replace('contact_reponse', {customConfig: '{{ asset("ckeditor_config.js") }}'});
+    </script>
+
+
+{{ form_end(form) }}

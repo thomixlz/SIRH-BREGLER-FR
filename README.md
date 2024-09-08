@@ -50,6 +50,11 @@ BREGLER Thomas (@thomixlz)
 
 ## Version History
 
+* 0.12 : 
+    * Dashboard data work
+    * Contact system work
+    * Info publish work
+
 * 0.11 : 
     * Add all style update
     * Add dashboard data
