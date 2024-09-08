@@ -8,6 +8,16 @@
     src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&libraries=places&callback=initAutocomplete">
 </script>
 
+  {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEURRH') or is_granted('ROLE_REFERENT_FRAIS') %}
+    <div class="col-12 champ-form container-form">  
+        <h3>Etat :</h3>
+        {{ form_row(form.etat, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
+     <hr>
+    </div>
+
+   
+    {% endif %}
+
 
 <!-- Champs cachés pour stocker les adresses formatées -->
 <input type="hidden" id="adresse-depart-cache" name="adresseDepartCache" value="{{ deplacement.adresseDepart }}">
@@ -59,10 +69,6 @@
     {{ form_widget(form.cout, { 'attr': {'class': 'form-control'} }) }}
 </div>
 
-<div>
-    {{ form_label(form.etat) }}
-    {{ form_widget(form.etat, { 'attr': {'class': 'form-control'} }) }}
-</div>
 
 <div>
     {{ form_label(form.user) }}

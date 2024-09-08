@@ -17,12 +17,23 @@ use Symfony\Bundle\SecurityBundle\Security;
 final class DeplacementController extends AbstractController
 {
 
+  
     
     #[Route(name: 'app_deplacement_index', methods: ['GET'])]
-    public function index(DeplacementRepository $deplacementRepository): Response
+    public function index(DeplacementRepository $deplacementRepository, Security $security): Response
     {
+
+          
+        $user = $security->getUser();
+
+        if ($this->isGranted('ROLE_USER') || $this->isGranted('ROLE_RESPONSABLE_HIERA') || $this->isGranted('ROLE_RTT')) {
+            $deplacements = $deplacementRepository->findBy(['user' => $user]);
+        } else {
+            $deplacements = $deplacementRepository->findAll();
+        }
+
         return $this->render('deplacement/index.html.twig', [
-            'deplacements' => $deplacementRepository->findAll(),
+            'deplacements' => $deplacements,
         ]);
     }
 

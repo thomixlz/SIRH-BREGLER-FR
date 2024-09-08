@@ -44,7 +44,7 @@ security:
         # admin@admin.com  
         - { path: ^/admin, roles: ROLE_ADMIN } 
         # directeur-rh@admin.com
-        - { path: ^/rh, roles: ROLE_DIRECTEURRH }
+        - { path: ^/admin, roles: ROLE_DIRECTEURRH }
         # responsable-hierarchique@admin.com
         - { path: ^/hierarchique, roles: ROLE_RESPONSABLE_HIERA }
         # referent-frais-deplacement@admin.com
@@ -52,7 +52,7 @@ security:
         # rtt@admin.com
         - { path: ^/rtt, roles: ROLE_RTT }
         # user@admin.com
-        - { path: ^/user, roles: ROLE_USER }
+        - { path: ^/users, roles: ROLE_USER }
  
 when@test:
     security:

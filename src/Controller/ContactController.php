@@ -10,16 +10,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\SecurityBundle\Security; 
+
 
 #[Route('/contact')]
 final class ContactController extends AbstractController
 {
     #[Route(name: 'app_contact_index', methods: ['GET'])]
-    public function index(ContactRepository $contactRepository): Response
+    public function index(ContactRepository $contactRepository, Security $security): Response
     {
+
+        $user = $security->getUser();
+
+        if ($this->isGranted('ROLE_USER') || $this->isGranted('ROLE_RESPONSABLE_HIERA') || $this->isGranted('ROLE_RTT') || $this->isGranted('ROLE_REFERENT_FRAIS')){
+            $contact = $contactRepository->findBy(['user' => $user]);
+        } else {
+            $contact = $contactRepository->findAll();
+        }
+
         return $this->render('contact/index.html.twig', [
-            'contacts' => $contactRepository->findAll(),
+            'contacts' => $contact,
         ]);
+
+       
     }
 
     #[Route('/new', name: 'app_contact_new', methods: ['GET', 'POST'])]

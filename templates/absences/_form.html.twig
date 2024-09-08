@@ -1,5 +1,15 @@
 {{ form_start(form) }}
 
+     {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEURRH') or is_granted('ROLE_RTT') %}
+    <div class="col-12 champ-form container-form">  
+        <h3>Etat :</h3>
+        {{ form_row(form.etat, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
+     <hr>
+    </div>
+
+   
+    {% endif %}
+    
     <div class="col-12 champ-form">
         <h3>Raison de l'absence :</h3>
         {{ form_row(form.type, { 'attr': { 'class': 'js-example-basic-multiple-limit form-control', 'placeholder': 'Equipe' } }) }}
@@ -36,6 +46,9 @@
         </div>
     </div>
 
+   
+
+
     <div class="col-12 d-flex justify-content-center align-items-center">
         <div class="modal-submit d-flex justify-content-center">
             <button type="submit" class="btn-crud">Enregistrer</button>
@@ -55,10 +68,7 @@
         {{ form_row(form.updatedAt, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
     </div>
 
-    <div class="d-none">
-        
-        {{ form_row(form.etat, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
-    </div>
+    
 
     <!-- Ckediotr -->
     <script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>

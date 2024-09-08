@@ -2,6 +2,22 @@
    
 {#  #}
 
+  {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEURRH') %}
+
+    <div class="col-12 champ-form container-form">  
+        <h3>Etat :</h3>
+        {{ form_row(form.etat, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
+    
+    </div>
+    <div class="col-12 champ-form container-form">  
+        <h3>Réponse:</h3>
+        {{ form_row(form.reponse, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
+        <hr>
+
+    </div>
+
+    {% endif %}
+
     <div class="col-12 champ-form container-form">
         <h3>Date :</h3>
         {{ form_row(form.date, { 'attr': { 'class': 'form-control', 'placeholder': 'Date de naissance' } }) }}
@@ -13,16 +29,10 @@
     </div>
 
 
-    <div class="d-none">
-        
-        {{ form_row(form.etat, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
-    </div>
+  
 
-    
-    <div class="d-none">
-        <h3>Réponse:</h3>
-        {{ form_row(form.reponse, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
-    </div>
+  
+
 
     <div class="d-none">
         <h3>Réponse:</h3>

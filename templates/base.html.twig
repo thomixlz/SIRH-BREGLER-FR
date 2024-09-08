@@ -91,14 +91,19 @@
                 <span class="iconoir-skateboarding"></span>
                 <span class="desc">Déplacements</span>
             </a>
+            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_RESPONSABLE_HIERA') or is_granted('ROLE_DIRECTEURRH') %}
             <a href="{{ path('app_equipe_index') }}" class="menu-item {% if app.request.attributes.get('_route') == 'app_equipe_index' %}active{% endif %}">
                 <span class="iconoir-table"></span>
                 <span class="desc">Équipes</span>
             </a>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEURRH') %}
             <a href="{{ path('app_user_index') }}" class="menu-item {% if app.request.attributes.get('_route') == 'app_user_index' %}active{% endif %}">
                 <span class="iconoir-user"></span>
                 <span class="desc">Utilisateurs</span>
             </a>
+            {% endif %}
+
             <a href="{{ path('app_calendrier') }}" class="menu-item {% if app.request.attributes.get('_route') == 'app_calendrier' %}active{% endif %}">
                 <span class="iconoir-calendar"></span>
                 <span class="desc">Calendrier</span>
