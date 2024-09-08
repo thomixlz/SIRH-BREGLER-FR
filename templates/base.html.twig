@@ -26,6 +26,7 @@
         
         {# Font Awesome #}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
         {# Bootstrap #}
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -50,7 +51,12 @@
  <main class="container">
       <div class="menu">
         <div class="avatar">
+                    {% if app.user.image == "ok" %}
+                    <p>Pas d'image :(</p>
+                    {% else %}
                     <img class="thumb" src="{{ asset(app.user.image ? 'uploads/user/' ~ app.user.image : 'assets/img/navbar/userpicture.png') }}" />
+
+                    {% endif %}
 
           <span class="name">
                 <b>{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %} {{ app.user.getEmail() }} {% endif %}</b>
@@ -65,7 +71,7 @@
                     <p class="text-center">Mode Référent frais</p>
                 {% elseif is_granted('ROLE_RTT') %}
                     <p class="text-center">Mode RTT</p>
-                {% elseif is_granted('ROLE_CONNECT') %}
+                {% elseif is_granted('ROLE_USER') %}
                     <p class="text-center">Mode User</p>
                 {% else %}
                     <p>No log</p>
@@ -116,8 +122,15 @@
         <span class="expander iconoir-arrow-right"></span>
       </div>
 
+
+
         {% block body %}{% endblock %}
     </div>
+
+
+
+
+
      
     </main>
     <div class="video">
@@ -128,6 +141,7 @@
         autoplay
         loop
       ></video>
+
     </div>
 
 
@@ -139,13 +153,54 @@
 
     {% block footer %}{% endblock %}
 
+    
+<!-- ***********************************************************************************
+                                🔧 NOTIF ALERTE 🔧                     
+**************************************************************************************** --> 
+
+
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEURRH') %}
+        <script type="text/javascript">
+            {% if hasUsersWithoutTeam %}
+                // Si des utilisateurs n'ont pas d'équipe, afficher un toast
+                Toastify({
+                    text: "Un ou plusieurs utilisateurs n'ont pas d'équipe attribuée !",
+                    duration:  -1, // Durée de 5 secondes
+                    close: false, // Ajout d'un bouton pour fermer le toast
+                    gravity: "top", // Toast positionné en haut
+                    position: "right", // Position à droite
+                    backgroundColor: "#f44336", // Couleur de fond rouge
+                }).showToast();
+            {% endif %}
+
+            {% if hasTeamsWithoutResponsable %}
+            Toastify({
+                text: "Une ou plusieurs équipes n'ont pas de responsable attribué !",
+                duration:  -1,
+                close: false,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "#ff9800", // Couleur orange pour alerter
+            }).showToast();
+        {% endif %}
+        </script>
+        {% endif %}
+
+
+
 <!-- ***********************************************************************************
                                 🔧 SCRIPTS 🔧                     
 **************************************************************************************** --> 
 
+        
+
+
+
         <!-- Scripts -->
         <script src="{{ asset('assets/js/sidebar.js') }}"></script>
-
 
         <!-- ***************************************************************** --> 
 

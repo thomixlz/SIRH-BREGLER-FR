@@ -12,6 +12,11 @@
         {{ form_row(form.nom, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
     </div>
 
+    <div class="col-12 champ-form container-form">
+        <h3>Responsable de l'équipe :</h3>
+        {{ form_row(form.responsable, { 'attr': { 'class': 'form-control', 'placeholder': 'Nom' } }) }}
+    </div>
+
     <div class="col-12 d-flex justify-content-center align-items-center">
         <div class="modal-submit d-flex justify-content-center">
             <button type="submit" class="btn-crud">Enregistrer</button>

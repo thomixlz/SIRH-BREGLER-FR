@@ -51,6 +51,12 @@ BREGLER Thomas (@thomixlz)
 ## Version History
 
 * 0.12 : 
+    * Add notif alert when user are not in team
+    * Add notif alert when team dont have a owner
+    
+
+
+* 0.12 : 
     * Dashboard data work
     * Contact system work
     * Info publish work

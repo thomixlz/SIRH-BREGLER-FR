@@ -17,10 +17,19 @@ use Symfony\Bundle\SecurityBundle\Security;
 final class AbsencesController extends AbstractController
 {
     #[Route(name: 'app_absences_index', methods: ['GET'])]
-    public function index(AbsencesRepository $absencesRepository): Response
+    public function index(AbsencesRepository $absencesRepository, Security $security): Response
     {
+
+        $user = $security->getUser();
+
+        if ($this->isGranted('ROLE_USER') || $this->isGranted('ROLE_RESPONSABLE_HIERA') || $this->isGranted('ROLE_REFERENT_FRAIS')) {
+            $absences = $absencesRepository->findBy(['user' => $user]);
+        } else {
+            $absences = $absencesRepository->findAll();
+        }
+
         return $this->render('absences/index.html.twig', [
-            'absences' => $absencesRepository->findAll(),
+            'absences' => $absences,
         ]);
     }
 

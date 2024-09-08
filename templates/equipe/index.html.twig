@@ -35,16 +35,16 @@
                 </td>
                 <td>{{ equipe.nom }}</td>
                 <td>
-                    {% for user in equipe.users %}
-                        {% if "ROLE_RESPONSABLE_HIERA" in user.roles  %}
-                            <a href="{{ path('app_user_show', {id: user.id}) }}">
-                                <div class="img-container">
-                                    <img class="img-profil-tab" src="{{ asset('uploads/user/' ~ user.image) }}">
-                                    <span class="tooltip-text">{{ user.nom }} {{ user.prenom }}</span>
-                                </div>
-                            </a>
-                        {% endif %}
-                    {% endfor %}
+                    {% if equipe.responsable %}
+                        <a href="{{ path('app_user_show', {id: equipe.responsable.id}) }}">
+                            <div class="img-container">
+                                <img class="img-profil-tab" src="{{ asset('uploads/user/' ~ equipe.responsable.image) }}" alt="Image du responsable">
+                                <span class="tooltip-text">{{ equipe.responsable.nom }} {{ equipe.responsable.prenom }}</span>
+                            </div>
+                        </a>
+                    {% else %}
+                        <span>Pas de responsable attribué</span>
+                    {% endif %}
                 </td>
                
                 <td>

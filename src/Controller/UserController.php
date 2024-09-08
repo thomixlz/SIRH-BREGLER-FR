@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('admin/user')]
+#[Route('/user')]
 class UserController extends AbstractController
 {
 
@@ -61,7 +61,8 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            
+            $file = $form->get('image')->getData();
+
             if($file != 'ok') {
                 $path = '/';
                 $fileName = str_replace(' ','_',$file->getClientOriginalName());
@@ -72,6 +73,7 @@ class UserController extends AbstractController
                 );
                 $user->setUser($fileName);
             }
+
 
             $password = $this->generateRandomPassword();
             

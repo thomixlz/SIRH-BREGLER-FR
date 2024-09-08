@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DefaultController!{% endblock %}
+{% block title %}SIRH | Dashboard{% endblock %}
 
 {% block body %}
 
@@ -13,7 +13,11 @@
 <div class="topbar">
         <h1 class="current"><b>SIRH - MNS</b> | <span>DASHBOARD</span> </h1>
         <nav>
-          <a href="{{ path('app_info_index') }}" class="menu-item"><span class="mr-2 iconoir-info-circle-solid"></span>Gestion informations</a>
+          {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEURRH') %}
+              <a href="{{ path('app_info_index') }}" class="menu-item">
+                  <span class="mr-2 iconoir-info-circle-solid"></span>Gestion informations
+              </a>
+          {% endif %}        
         </nav>
       </div>
       <div class="wrapper">
@@ -36,6 +40,7 @@
         </div>
 
         <div class="d-flex">
+          {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEURRH') or is_granted('ROLE_RTT') %}
           <div class="col-4">
               <div class="rectangle-home">
                 <h3>Absences</h3>
@@ -44,6 +49,9 @@
                 <p>Finalisé : {{ absencesOui }}</p>
               </div>
           </div>
+          {% endif %}
+
+          {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEURRH') or is_granted('ROLE_REFERENT_FRAIS') %}
           <div class="col-4">
               <div class="rectangle-home">
                 <h3>Frais déplacement</h3>
@@ -52,6 +60,9 @@
                 <p>Finalisé : {{ deplacementsOui }}</p>
               </div>
           </div>
+          {% endif %}
+
+          {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEURRH') %}
           <div class="col-4">
               <div class="rectangle-home">
                 <h3>Contact</h3>
@@ -60,6 +71,8 @@
                 <p>Message finalisé : {{ contactsOui }}</p>
               </div>
           </div>
+          {% endif %}
+
       </div>
 
       <div class="d-flex">

@@ -6,7 +6,10 @@
 <div class="topbar">
         <h1 class="current"><b>SIRH - MNS</b> | <span>GESTION ABSENCES</span> </h1>
         <nav>
-            <a href="{{ path('app_types_absences_index') }}" class="menu-item"><span class="iconoir-plus-circle-solid mr-2"></span>Gestion types d'absence</a>
+            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_DIRECTEURRH') or  is_granted('ROLE_RTT') %}
+                <a href="{{ path('app_types_absences_index') }}" class="menu-item"><span class="iconoir-plus-circle-solid mr-2"></span>Gestion types d'absence</a>
+            {% endif %}
+
             <a href="{{ path('app_absences_new') }}" class="menu-item"><span class="iconoir-plus-circle-solid mr-2"></span>Ajouter absences</a>
         </nav>
       </div>
@@ -56,7 +59,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="8">Pas d'absences enregistré</td>
             </tr>
         {% endfor %}
         </tbody>

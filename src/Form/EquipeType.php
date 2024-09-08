@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Equipe;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,6 +34,20 @@ class EquipeType extends AbstractType
                 'label' => false,
                 'required' => false
             ])
+
+            ->add('responsable', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => function (User $user) {
+                    return $user->getPrenom() . ' ' . $user->getNom(); // Concaténer le prénom et le nom
+                },
+                'attr' => [
+                    'class' => 'attached-input',
+                    'placeholder' => 'Sélectionner le responsable'
+                ],
+                'label' => false,
+                'required' => false
+            ])
+            
             ->add('parent', EntityType::class, [
                 'class' => Equipe::class,
                 'choice_label' => 'nom',
